@@ -233,7 +233,7 @@ a:focus {
 #home {
     padding: 0;
     color: #fff;
-    background-image: url(../img/cover/home.jpg);
+    background-image: url(../img/cover/home.png);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -436,7 +436,7 @@ a:focus {
 }
 
 #contact {
-    background: url(../img/cover/contact.jpg);
+    background: url(../img/cover/contact.png);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
