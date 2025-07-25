@@ -65,8 +65,9 @@ body {
     margin: 0 auto;
     padding: 1rem 2rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 3rem;
 }
 
 .nav-brand {
@@ -79,10 +80,7 @@ body {
         2px 2px 0px var(--electric-pink),
         4px 4px 0px var(--electric-blue),
         6px 6px 0px var(--bright-yellow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    flex-shrink: 0;
 }
 
 .nav-menu {
