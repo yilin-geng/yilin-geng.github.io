@@ -74,10 +74,11 @@ body {
     font-weight: 900;
     color: var(--bright-yellow);
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-shadow: 
         2px 2px 0px var(--electric-pink),
-        4px 4px 0px var(--electric-blue);
+        4px 4px 0px var(--electric-blue),
+        6px 6px 0px var(--bright-yellow);
 }
 
 .nav-menu {
@@ -1562,8 +1563,8 @@ main {
 
 /* More Highlights Section */
 .more-highlights {
-    margin-top: 3rem;
     text-align: center;
+    margin-top: 3rem;
 }
 
 .highlights-link {
@@ -1579,7 +1580,6 @@ main {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 1rem;
 }
 
 .highlights-link:hover {

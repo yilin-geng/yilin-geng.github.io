@@ -287,45 +287,50 @@ class BinaryMatrix {
 
         console.log('Creating binary matrix...');
         this.createMatrix(matrixContainer);
-        this.startAnimation();
-        this.addInteractivity();
-        console.log('Binary matrix created with', this.matrix.length, 'cells');
     }
 
     createMatrix(container) {
-        // Clear any existing content
-        container.innerHTML = '';
-        
-        // Create 6x10 grid of binary cells (60 total) - more Warhol-like proportions
-        const rows = 6;
-        const cols = 10;
-        const variants = ['', 'variant-1', 'variant-2', 'variant-3'];
-        
-        for (let i = 0; i < rows * cols; i++) {
-            const cell = document.createElement('div');
-            cell.className = 'binary-cell';
+        // Wait a bit to ensure DOM is ready, then clear and recreate
+        setTimeout(() => {
+            container.innerHTML = '';
             
-            const value = Math.random() > 0.5 ? '1' : '0';
-            cell.textContent = value;
+            // Create 6x10 grid of binary cells (60 total) - more Warhol-like proportions
+            const rows = 6;
+            const cols = 10;
+            const variants = ['', 'variant-1', 'variant-2', 'variant-3'];
             
-            // Add base class
-            cell.classList.add(value === '1' ? 'one' : 'zero');
-            
-            // Add Warhol-style color variants in sections
-            const section = Math.floor(i / 15); // Divide into 4 sections of 15 cells each
-            if (section < variants.length && variants[section]) {
-                cell.classList.add(variants[section]);
+            for (let i = 0; i < rows * cols; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'binary-cell';
+                
+                const value = Math.random() > 0.5 ? '1' : '0';
+                cell.textContent = value;
+                
+                // Add base class
+                cell.classList.add(value === '1' ? 'one' : 'zero');
+                
+                // Add Warhol-style color variants in sections
+                const section = Math.floor(i / 15); // Divide into 4 sections of 15 cells each
+                if (section < variants.length && variants[section]) {
+                    cell.classList.add(variants[section]);
+                }
+                
+                // Add data attributes for position
+                cell.dataset.row = Math.floor(i / cols);
+                cell.dataset.col = i % cols;
+                
+                container.appendChild(cell);
             }
-            
-            // Add data attributes for position
-            cell.dataset.row = Math.floor(i / cols);
-            cell.dataset.col = i % cols;
-            
-            container.appendChild(cell);
-        }
 
-        this.matrix = container.querySelectorAll('.binary-cell');
-        console.log('Matrix cells created:', this.matrix.length);
+            this.matrix = container.querySelectorAll('.binary-cell');
+            console.log('Matrix cells created:', this.matrix.length);
+            
+            // Start animation and interactivity after creation
+            if (this.matrix.length > 0) {
+                this.startAnimation();
+                this.addInteractivity();
+            }
+        }, 100);
     }
 
     startAnimation() {
