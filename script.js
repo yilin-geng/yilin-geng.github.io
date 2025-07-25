@@ -280,14 +280,22 @@ class BinaryMatrix {
 
     init() {
         const matrixContainer = document.getElementById('binaryMatrix');
-        if (!matrixContainer) return;
+        if (!matrixContainer) {
+            console.log('Binary matrix container not found');
+            return;
+        }
 
+        console.log('Creating binary matrix...');
         this.createMatrix(matrixContainer);
         this.startAnimation();
         this.addInteractivity();
+        console.log('Binary matrix created with', this.matrix.length, 'cells');
     }
 
     createMatrix(container) {
+        // Clear any existing content
+        container.innerHTML = '';
+        
         // Create 6x10 grid of binary cells (60 total) - more Warhol-like proportions
         const rows = 6;
         const cols = 10;
@@ -296,14 +304,16 @@ class BinaryMatrix {
         for (let i = 0; i < rows * cols; i++) {
             const cell = document.createElement('div');
             cell.className = 'binary-cell';
-            cell.textContent = Math.random() > 0.5 ? '1' : '0';
+            
+            const value = Math.random() > 0.5 ? '1' : '0';
+            cell.textContent = value;
             
             // Add base class
-            cell.classList.add(cell.textContent === '1' ? 'one' : 'zero');
+            cell.classList.add(value === '1' ? 'one' : 'zero');
             
             // Add Warhol-style color variants in sections
             const section = Math.floor(i / 15); // Divide into 4 sections of 15 cells each
-            if (section < variants.length) {
+            if (section < variants.length && variants[section]) {
                 cell.classList.add(variants[section]);
             }
             
@@ -315,6 +325,7 @@ class BinaryMatrix {
         }
 
         this.matrix = container.querySelectorAll('.binary-cell');
+        console.log('Matrix cells created:', this.matrix.length);
     }
 
     startAnimation() {

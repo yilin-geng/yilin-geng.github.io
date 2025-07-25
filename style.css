@@ -74,8 +74,10 @@ body {
     font-weight: 900;
     color: var(--bright-yellow);
     text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 3px 3px 0px var(--electric-pink);
+    letter-spacing: 3px;
+    text-shadow: 
+        2px 2px 0px var(--electric-pink),
+        4px 4px 0px var(--electric-blue);
 }
 
 .nav-menu {
@@ -1403,11 +1405,12 @@ main {
     max-width: 500px;
     margin: 3rem auto 0;
     padding: 1rem;
-    background: var(--black);
+    background: var(--white);
     border: 8px solid var(--black);
     box-shadow: 
         0 0 0 4px var(--white),
         12px 12px 0px var(--electric-pink);
+    min-height: 300px;
 }
 
 .binary-cell {
@@ -1557,56 +1560,36 @@ main {
     transform: translateY(-2px);
 }
 
-/* Portfolio Links */
-.portfolio-links {
-    margin-top: 4rem;
+/* More Highlights Section */
+.more-highlights {
+    margin-top: 3rem;
     text-align: center;
-    padding: 3rem;
-    background: linear-gradient(45deg, var(--purple-pop), var(--hot-orange));
-    border: 6px solid var(--black);
-    box-shadow: 12px 12px 0px var(--cyan-bright);
 }
 
-.portfolio-links h3 {
+.highlights-link {
+    background: var(--hot-orange);
     color: var(--white);
-    font-size: 2rem;
-    font-weight: 900;
-    margin-bottom: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
-}
-
-.portfolio-nav {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.portfolio-nav-link {
-    background: var(--white);
-    color: var(--black);
     text-decoration: none;
-    padding: 1rem 1.5rem;
-    border: 4px solid var(--black);
+    padding: 1rem 2rem;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 1px;
+    border: 4px solid var(--black);
     transition: all 0.3s ease;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    font-size: 1rem;
 }
 
-.portfolio-nav-link:hover {
+.highlights-link:hover {
     background: var(--bright-yellow);
-    transform: translateY(-3px);
-    box-shadow: 6px 6px 0px var(--black);
+    color: var(--black);
+    transform: translateY(-2px);
 }
 
-.nav-icon {
-    font-size: 1.2rem;
+.highlights-link:hover .link-arrow {
+    transform: translateX(5px);
 }
 
 /* Fun Facts Preview */
@@ -1639,9 +1622,24 @@ main {
     transform: rotate(1deg);
 }
 
-.adventure-fact {
+.cat-fact {
     box-shadow: 8px 8px 0px var(--lime-green);
     transform: rotate(-0.5deg);
+}
+
+.whale-fact {
+    box-shadow: 8px 8px 0px var(--purple-pop);
+    transform: rotate(0.8deg);
+}
+
+.reading-fact {
+    box-shadow: 8px 8px 0px var(--hot-orange);
+    transform: rotate(-1.2deg);
+}
+
+.travel-fact {
+    box-shadow: 8px 8px 0px var(--cyan-bright);
+    transform: rotate(0.3deg);
 }
 
 .fact-card:hover {
