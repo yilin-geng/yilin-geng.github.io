@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Game</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .game-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 1rem;
+        }
+        button:hover {
+            background: #333;
+        }
+        #score {
+            font-size: 2rem;
+            margin: 1rem 0;
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Sample Clicker Game</h1>
+        <div id="score">0</div>
+        <button onclick="increment()">Click Me!</button>
+        <button onclick="reset()">Reset</button>
+        <p>This is a sample interactive project. Replace with your own games!</p>
+    </div>
+
+    <script>
+        let score = 0;
+        
+        function increment() {
+            score++;
+            document.getElementById('score').textContent = score;
+        }
+        
+        function reset() {
+            score = 0;
+            document.getElementById('score').textContent = score;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+{
+  "title": "Sample Interactive Game",
+  "description": "This is a sample interactive project. Create new folders in content/projects/ with an info.json file and your HTML/JS game.",
+  "preview": "screenshot.png"
+}
