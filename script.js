@@ -288,15 +288,24 @@ class BinaryMatrix {
     }
 
     createMatrix(container) {
-        // Create 8x12 grid of binary cells (96 total)
-        const rows = 8;
-        const cols = 12;
+        // Create 6x10 grid of binary cells (60 total) - more Warhol-like proportions
+        const rows = 6;
+        const cols = 10;
+        const variants = ['', 'variant-1', 'variant-2', 'variant-3'];
         
         for (let i = 0; i < rows * cols; i++) {
             const cell = document.createElement('div');
             cell.className = 'binary-cell';
             cell.textContent = Math.random() > 0.5 ? '1' : '0';
+            
+            // Add base class
             cell.classList.add(cell.textContent === '1' ? 'one' : 'zero');
+            
+            // Add Warhol-style color variants in sections
+            const section = Math.floor(i / 15); // Divide into 4 sections of 15 cells each
+            if (section < variants.length) {
+                cell.classList.add(variants[section]);
+            }
             
             // Add data attributes for position
             cell.dataset.row = Math.floor(i / cols);

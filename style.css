@@ -1395,32 +1395,36 @@ main {
     font-weight: 900;
 }
 
-/* Binary Matrix */
+/* Warhol-Inspired Binary Matrix */
 .binary-matrix {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 8px;
-    max-width: 600px;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 2px;
+    max-width: 500px;
     margin: 3rem auto 0;
-    padding: 2rem;
+    padding: 1rem;
     background: var(--black);
-    border: 6px solid var(--electric-pink);
-    box-shadow: 12px 12px 0px var(--bright-yellow);
+    border: 8px solid var(--black);
+    box-shadow: 
+        0 0 0 4px var(--white),
+        12px 12px 0px var(--electric-pink);
 }
 
 .binary-cell {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 900;
-    border: 2px solid var(--white);
-    transition: all 0.3s ease;
+    border: none;
+    transition: all 0.2s ease;
     cursor: pointer;
+    font-family: 'Courier New', monospace;
 }
 
+/* Warhol-style color variations */
 .binary-cell.one {
     background: var(--electric-pink);
     color: var(--white);
@@ -1431,10 +1435,40 @@ main {
     color: var(--black);
 }
 
+.binary-cell.one.variant-1 {
+    background: var(--electric-blue);
+    color: var(--white);
+}
+
+.binary-cell.zero.variant-1 {
+    background: var(--lime-green);
+    color: var(--black);
+}
+
+.binary-cell.one.variant-2 {
+    background: var(--purple-pop);
+    color: var(--white);
+}
+
+.binary-cell.zero.variant-2 {
+    background: var(--cyan-bright);
+    color: var(--black);
+}
+
+.binary-cell.one.variant-3 {
+    background: var(--hot-orange);
+    color: var(--white);
+}
+
+.binary-cell.zero.variant-3 {
+    background: var(--neon-green);
+    color: var(--black);
+}
+
 .binary-cell:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
     z-index: 10;
-    box-shadow: 0 0 20px rgba(255, 20, 147, 0.6);
+    filter: contrast(1.3) saturate(1.2);
 }
 
 /* Current Activities Section */

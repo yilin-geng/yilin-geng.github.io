@@ -94,6 +94,24 @@
 - **New Home Page**: Clean welcome landing with pop art grid and navigation cards
 - **Status**: About page redesign complete, navigation structure updated
 
+### Session 3 - July 25, 2025
+- **Website Structure Streamlined**: Removed redundant home page, About serves as landing (index.html)
+- **Warhol-Inspired Binary Matrix Enhancement**:
+  - Improved to 6x10 grid (60 cells) with better proportions
+  - 4 color-blocked sections mimicking Warhol's repetition technique
+  - Silkscreen-style borders, monospace font, enhanced hover effects
+  - Color variants: Pink/Yellow, Blue/Green, Purple/Cyan, Orange/Neon
+- **Content Research & Accuracy**:
+  - **LibrAI**: Updated with focus on AI-powered library management solutions
+  - **NextGen25**: Real hackathon data from ainextgen.com.au (Aug 23-30, AU$9K+ prizes)
+  - **Chain of Command Research**: Concrete "Control Illusion" paper details
+  - Removed generic "latest research" language for specific LLM instruction hierarchy focus
+- **Chinese Name Correction**: Fixed to 一麟 (Yi Lin) connecting to binary theme
+- **Simplified Fun Facts**: Streamlined to single binary connection fact
+- **Future-Proofing**: Added HTML comments for easy research updates
+- **Navigation Clean-up**: 5-section structure (About/Landing → Portfolio → Photography → Fun Stuff → Contact)
+- **Status**: Streamlined website complete with accurate, research-backed content
+
 ---
 
 ## Design Principles to Maintain
