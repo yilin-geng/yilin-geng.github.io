@@ -1404,7 +1404,7 @@ main {
     grid-template-columns: repeat(10, 1fr);
     gap: 2px;
     max-width: 500px;
-    margin: 3rem auto 0;
+    margin: 1.5rem auto 0;
     padding: 1rem;
     background: var(--white);
     border: 8px solid var(--black);
