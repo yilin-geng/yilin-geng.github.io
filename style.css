@@ -188,6 +188,31 @@ main {
     transform: rotate(0deg) scale(1.1);
 }
 
+/* Specific tag colors */
+.founder-tag {
+    background: var(--electric-pink) !important;
+    border-color: var(--electric-pink) !important;
+    color: var(--white) !important;
+}
+
+.collaborator-tag {
+    background: var(--bright-yellow) !important;
+    border-color: var(--bright-yellow) !important;
+    color: var(--black) !important;
+}
+
+.tinkerer-tag {
+    background: var(--electric-blue) !important;
+    border-color: var(--electric-blue) !important;
+    color: var(--white) !important;
+}
+
+.optimist-tag {
+    background: var(--lime-green) !important;
+    border-color: var(--lime-green) !important;
+    color: var(--black) !important;
+}
+
 .hero-description {
     font-size: 1.5rem;
     font-weight: 600;
@@ -1406,7 +1431,7 @@ main {
     grid-template-columns: repeat(10, 1fr);
     gap: 2px;
     max-width: 500px;
-    margin: 1.5rem auto 0;
+    margin: 1rem auto 0;
     padding: 1rem;
     background: var(--white);
     border: 8px solid var(--black);
@@ -1555,6 +1580,9 @@ main {
     letter-spacing: 1px;
     transition: all 0.3s ease;
     display: inline-block;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 .activity-link:hover {
