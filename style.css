@@ -79,6 +79,10 @@ body {
         2px 2px 0px var(--electric-pink),
         4px 4px 0px var(--electric-blue),
         6px 6px 0px var(--bright-yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .nav-menu {
