@@ -753,14 +753,18 @@ main {
         padding: 2rem;
     }
     
-    .contact-method {
-        flex-direction: column;
-        text-align: center;
-        gap: 0.5rem;
+    .contact-button {
+        padding: 1.2rem;
+        gap: 1rem;
     }
     
-    .contact-label {
-        min-width: auto;
+    .button-title {
+        font-size: 1.1rem;
+        letter-spacing: 1.5px;
+    }
+    
+    .button-icon {
+        font-size: 2rem;
     }
 }
 
@@ -846,6 +850,32 @@ main {
     
     .scenario-content {
         padding: 1.5rem;
+    }
+    
+    .contact-button {
+        padding: 1rem;
+        gap: 1rem;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .button-title {
+        font-size: 1rem;
+        letter-spacing: 1px;
+    }
+    
+    .button-subtitle {
+        font-size: 0.8rem;
+    }
+    
+    .button-arrow {
+        font-size: 1.5rem;
+    }
+    
+    .institution-badge {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
     }
     
     .response-item {
@@ -934,6 +964,30 @@ main {
     
     .scenario-content {
         padding: 1rem;
+    }
+    
+    .contact-button {
+        padding: 0.8rem;
+        gap: 0.8rem;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .button-title {
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+    
+    .button-subtitle {
+        font-size: 0.7rem;
+    }
+    
+    .button-icon {
+        font-size: 1.8rem;
+    }
+    
+    .button-arrow {
+        font-size: 1.2rem;
     }
     
     .scenario-tags {
@@ -2533,40 +2587,105 @@ html {
     color: var(--black);
 }
 
-.contact-details {
+.contact-actions {
     margin: 2rem 0;
     display: grid;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
-.contact-method {
+.contact-button {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--white);
+    padding: 1.5rem;
+    border: 4px solid var(--black);
+    text-decoration: none;
+    color: var(--black);
+    transition: all 0.3s ease;
+    transform: rotate(-0.5deg);
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.contact-button:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 8px 8px 0px var(--bright-yellow);
+}
+
+.librai-email:hover,
+.librai-website:hover {
+    box-shadow: 8px 8px 0px var(--electric-pink);
+    background: linear-gradient(45deg, var(--white), rgba(255, 20, 147, 0.1));
+}
+
+.academic-email:hover {
+    box-shadow: 8px 8px 0px var(--electric-blue);
+    background: linear-gradient(45deg, var(--white), rgba(0, 191, 255, 0.1));
+}
+
+.linkedin-connect:hover,
+.personal-email:hover {
+    box-shadow: 8px 8px 0px var(--lime-green);
+    background: linear-gradient(45deg, var(--white), rgba(0, 255, 0, 0.1));
+}
+
+.button-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+}
+
+.button-content {
+    flex-grow: 1;
+}
+
+.button-title {
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--black);
+    margin-bottom: 0.3rem;
+}
+
+.button-subtitle {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--medium-gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.button-arrow {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--black);
+    transition: all 0.3s ease;
+}
+
+.contact-button:hover .button-arrow {
+    transform: translateX(5px);
+    color: var(--electric-pink);
+}
+
+.institution-badge {
     display: flex;
     align-items: center;
     gap: 1rem;
     background: rgba(0, 0, 0, 0.05);
     padding: 1rem;
-    border-left: 4px solid var(--black);
+    border-left: 4px solid var(--electric-blue);
+    transform: rotate(0.5deg);
 }
 
-.contact-label {
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--black);
-    flex-shrink: 0;
-    min-width: 120px;
+.badge-icon {
+    font-size: 1.5rem;
 }
 
-.contact-value {
+.badge-text {
     font-weight: 700;
     color: var(--black);
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.contact-value:hover {
-    color: var(--electric-pink);
-    text-decoration: underline;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .scenario-tags {
@@ -2648,7 +2767,6 @@ html {
 /* Touch-friendly interactions */
 @media (pointer: coarse) {
     .nav-link,
-    .contact-value,
     .scenario-tag,
     .tab-btn,
     .contact-action,
@@ -2659,6 +2777,16 @@ html {
         align-items: center;
         justify-content: center;
         padding: 12px 16px;
+    }
+    
+    .contact-button {
+        min-height: 60px;
+        padding: 1.2rem;
+        gap: 1.2rem;
+    }
+    
+    .contact-button:hover {
+        transform: rotate(0deg) scale(1.05);
     }
     
     .portrait-panel {
