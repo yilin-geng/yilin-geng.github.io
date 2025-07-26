@@ -13,7 +13,6 @@
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">About</a></li>
                 <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
-                <li><a href="photography.html" class="nav-link">Photography</a></li>
                 <li><a href="projects.html" class="nav-link">Fun Stuff</a></li>
                 <li><a href="contact.html" class="nav-link">Contact</a></li>
             </ul>
@@ -24,86 +23,31 @@
         <section class="section">
             <div class="container">
                 <h1 class="section-title">Fun Stuff</h1>
-                <div class="content-area">
-                    <p>Small interactive experiments & games - where creativity meets code in playful ways.</p>
+                
+                <!-- Photography Section -->
+                <div class="fun-section">
+                    <h2 class="pop-title">📷 Photography</h2>
+                    <div class="content-area">
+                        <p>I frequently go out to take photos, though I'm not a professional photographer - my main hobby is restoring vintage mechanical cameras and taking them out to shoot film.</p>
+                    </div>
+
+                    <div class="albums-showcase">
+                        <div class="albums-grid" id="albums-grid">
+                            <!-- Albums loaded dynamically -->
+                        </div>
+                    </div>
                 </div>
 
-                <div class="projects-showcase">
-                    <div class="projects-grid">
-                        <div class="project-card pop-style">
-                            <div class="project-preview game-preview">
-                                <div class="preview-icon">🎮</div>
-                                <div class="preview-text">INTERACTIVE<br>GAME</div>
-                            </div>
-                            <div class="project-info">
-                                <h3>Sample Game</h3>
-                                <p>A fun interactive experiment showcasing creative coding and game mechanics.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">JavaScript</span>
-                                    <span class="project-tag">Interactive</span>
-                                    <span class="project-tag">Game</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="content/projects/sample-game/index.html" class="project-link" target="_blank">PLAY GAME</a>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Creative Projects Section -->
+                <div class="fun-section">
+                    <h2 class="pop-title">🎨 Creative Experiments</h2>
+                    <div class="content-area">
+                        <p>Small interactive experiments and games where creativity meets code in playful ways.</p>
+                    </div>
 
-                        <div class="project-card pop-style">
-                            <div class="project-preview web-preview">
-                                <div class="preview-icon">🌐</div>
-                                <div class="preview-text">WEB<br>EXPERIMENT</div>
-                            </div>
-                            <div class="project-info">
-                                <h3>Visual Effects</h3>
-                                <p>CSS animations and JavaScript interactions creating mesmerizing visual experiences.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">CSS</span>
-                                    <span class="project-tag">Animation</span>
-                                    <span class="project-tag">Visual</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="#" class="project-link disabled">COMING SOON</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="project-card pop-style">
-                            <div class="project-preview code-preview">
-                                <div class="preview-icon">⚡</div>
-                                <div class="preview-text">CODE<br>PLAYGROUND</div>
-                            </div>
-                            <div class="project-info">
-                                <h3>Algorithm Visualizer</h3>
-                                <p>Interactive demonstrations of algorithms and data structures with colorful animations.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">Algorithms</span>
-                                    <span class="project-tag">Education</span>
-                                    <span class="project-tag">Visual</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="#" class="project-link disabled">IN DEVELOPMENT</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="project-card pop-style">
-                            <div class="project-preview art-preview">
-                                <div class="preview-icon">🎨</div>
-                                <div class="preview-text">DIGITAL<br>ART</div>
-                            </div>
-                            <div class="project-info">
-                                <h3>Generative Art</h3>
-                                <p>Computer-generated art pieces using mathematical functions and creative algorithms.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">Generative</span>
-                                    <span class="project-tag">Art</span>
-                                    <span class="project-tag">Creative</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="#" class="project-link disabled">EXPLORING</a>
-                                </div>
-                            </div>
+                    <div class="projects-showcase">
+                        <div class="projects-grid" id="projects-grid">
+                            <!-- Projects loaded dynamically -->
                         </div>
                     </div>
                 </div>
@@ -137,5 +81,105 @@
             <p>&copy; 2025 Yilin Geng. All wrongs forgiven, all rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Load albums from content/albums/ directory
+        async function loadAlbums() {
+            const albumsGrid = document.getElementById('albums-grid');
+            
+            try {
+                // Get list of album directories (fallback approach)
+                const albumNames = ['sample-album', 'urban-explorations', 'travel-moments', 'camera-collection'];
+                
+                const albums = [];
+                for (const albumName of albumNames) {
+                    try {
+                        const response = await fetch(`content/albums/${albumName}/info.json`);
+                        if (response.ok) {
+                            const albumInfo = await response.json();
+                            albumInfo.folderName = albumName;
+                            albums.push(albumInfo);
+                        }
+                    } catch (error) {
+                        console.log(`Could not load album: ${albumName}`);
+                    }
+                }
+
+                // Create album cards
+                albumsGrid.innerHTML = albums.map(album => `
+                    <div class="album-card warhol-style">
+                        <div class="album-preview pink-preview">
+                            <div class="preview-text">${album.title.toUpperCase().replace(' ', '<br>')}</div>
+                        </div>
+                        <div class="album-info">
+                            <h3>${album.title}</h3>
+                            <p>${album.description}</p>
+                            <div class="album-stats">
+                                <span class="stat">📸 ${album.date}</span>
+                                <span class="stat">🎞️ Film</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error loading albums:', error);
+                albumsGrid.innerHTML = '<p>Albums coming soon...</p>';
+            }
+        }
+
+        // Load projects from content/projects/ directory
+        async function loadProjects() {
+            const projectsGrid = document.getElementById('projects-grid');
+            
+            try {
+                // Get list of project directories (fallback approach)
+                const projectNames = ['sample-game']; // Will be expanded dynamically
+                
+                const projects = [];
+                for (const projectName of projectNames) {
+                    try {
+                        const response = await fetch(`content/projects/${projectName}/info.json`);
+                        if (response.ok) {
+                            const projectInfo = await response.json();
+                            projectInfo.folderName = projectName;
+                            projects.push(projectInfo);
+                        }
+                    } catch (error) {
+                        console.log(`Could not load project: ${projectName}`);
+                    }
+                }
+
+                // Create project cards
+                projectsGrid.innerHTML = projects.map(project => `
+                    <div class="project-card pop-style">
+                        <div class="project-preview game-preview">
+                            <div class="preview-icon">🎮</div>
+                            <div class="preview-text">INTERACTIVE<br>PROJECT</div>
+                        </div>
+                        <div class="project-info">
+                            <h3>${project.title}</h3>
+                            <p>${project.description}</p>
+                            <div class="project-links">
+                                <a href="content/projects/${project.folderName}/index.html" class="project-link" target="_blank">PLAY NOW</a>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                projectsGrid.innerHTML = '<p>Projects coming soon...</p>';
+            }
+        }
+
+        // Load content on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            await Promise.all([
+                loadAlbums(),
+                loadProjects()
+            ]);
+        });
+    </script>
 </body>
 </html>

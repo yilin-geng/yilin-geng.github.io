@@ -1,0 +1,7 @@
+{
+  "title": "Chain of Command Research",
+  "type": "LLM Instruction Hierarchies",
+  "description": "\"Control Illusion\" paper exposing systematic failures in system/user role assignments in LLMs, part of ongoing research into instruction hierarchies and AI control mechanisms.",
+  "tags": ["RESEARCH", "LLM CONTROL", "ARXIV"],
+  "headerType": "research-header"
+}
