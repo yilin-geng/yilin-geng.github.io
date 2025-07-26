@@ -2007,7 +2007,7 @@ main {
 
 /* Fun Facts Preview */
 .fun-facts-preview {
-    margin: 4rem 0;
+    /* Remove custom margin to let .section styling handle it */
 }
 
 .facts-preview-grid {
