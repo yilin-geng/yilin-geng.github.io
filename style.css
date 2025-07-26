@@ -65,9 +65,9 @@ body {
     margin: 0 auto;
     padding: 1rem 2rem;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    gap: 3rem;
+    gap: 2rem;
 }
 
 .nav-brand {
@@ -556,37 +556,145 @@ main {
     font-size: 0.9rem;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* ===== COMPREHENSIVE RESPONSIVE DESIGN ===== */
+
+/* Large Desktop (1440px and up) */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1400px;
+    }
+    
+    .hero-title {
+        font-size: 8rem;
+        letter-spacing: 8px;
+    }
+    
+    .section-title {
+        font-size: 4rem;
+        letter-spacing: 4px;
+    }
+    
+    .nav-brand {
+        font-size: 2.2rem;
+        letter-spacing: 5px;
+    }
+}
+
+/* Standard Desktop (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+    .container {
+        max-width: 1200px;
+        padding: 0 2rem;
+    }
+    
+    .nav-container {
+        padding: 1rem 2rem;
+    }
+}
+
+/* Tablet Landscape (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+    
+    .nav-container {
+        padding: 1rem 1.5rem;
+        gap: 1.5rem;
+    }
+    
+    .nav-brand {
+        font-size: 1.8rem;
+        letter-spacing: 3px;
+    }
+    
+    .nav-menu {
+        gap: 1.5rem;
+    }
+    
+    .nav-link {
+        font-size: 1rem;
+        padding: 8px 14px;
+    }
+    
+    .hero-title {
+        font-size: 4.5rem;
+        letter-spacing: 5px;
+    }
+    
+    .section-title {
+        font-size: 3rem;
+        letter-spacing: 3px;
+    }
+    
+    .albums-grid,
+    .projects-grid,
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .philosophy-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .warhol-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .portrait-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 400px;
+    }
+    
+    .portrait-panel {
+        width: 120px;
+        height: 120px;
+        font-size: 3.5rem;
+    }
+}
+
+/* Tablet Portrait (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
     .nav-container {
         padding: 1rem;
         flex-direction: column;
         gap: 1rem;
     }
     
+    .nav-brand {
+        font-size: 1.6rem;
+        letter-spacing: 2px;
+    }
+    
     .nav-menu {
-        gap: 0.5rem;
+        gap: 1rem;
         flex-wrap: wrap;
         justify-content: center;
     }
     
     .nav-link {
-        font-size: 0.9rem;
-        padding: 6px 12px;
-    }
-    
-    .container {
-        padding: 0 1rem;
-    }
-    
-    .section-title {
-        font-size: 2.5rem;
-        letter-spacing: 2px;
+        font-size: 0.95rem;
+        padding: 8px 12px;
     }
     
     .hero-title {
-        font-size: 3rem;
-        letter-spacing: 4px;
+        font-size: 3.5rem;
+        letter-spacing: 3px;
+    }
+    
+    .section-title {
+        font-size: 2.8rem;
+        letter-spacing: 2px;
+    }
+    
+    .pop-title {
+        font-size: 2.2rem;
+        letter-spacing: 2px;
     }
     
     .hero-subtitle {
@@ -596,64 +704,285 @@ main {
     }
     
     .portrait-grid {
-        grid-template-columns: 1fr 1fr;
-        max-width: 300px;
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 320px;
     }
     
     .portrait-panel {
         width: 140px;
         height: 140px;
-        font-size: 3rem;
+        font-size: 3.2rem;
     }
     
     .quick-links {
         grid-template-columns: 1fr;
-    }
-    
-    .warhol-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .portfolio-tabs {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-    
-    .tab-btn {
-        padding: 0.8rem 1.2rem;
-        font-size: 0.9rem;
+        gap: 1rem;
     }
     
     .albums-grid,
     .projects-grid,
     .portfolio-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
     
     .philosophy-grid,
-    .pet-cards,
     .fun-philosophy,
-    .contact-grid,
     .facts-grid {
         grid-template-columns: 1fr;
     }
     
+    .portfolio-tabs {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+    
+    .tab-btn {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Contact page tablet adjustments */
+    .scenario-header {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+    
+    .scenario-content {
+        padding: 2rem;
+    }
+    
+    .contact-method {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .contact-label {
+        min-width: auto;
+    }
+}
+
+/* Mobile Large (375px - 480px) */
+@media (min-width: 375px) and (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .nav-container {
+        padding: 0.8rem;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .nav-brand {
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+    }
+    
+    .nav-menu {
+        gap: 0.8rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-link {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+        letter-spacing: 2px;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+    }
+    
     .pop-title {
         font-size: 2rem;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
+    }
+    
+    .portrait-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 280px;
+        gap: 0.5rem;
+    }
+    
+    .portrait-panel {
+        width: 120px;
+        height: 120px;
+        font-size: 2.8rem;
     }
     
     .section {
         margin: 1rem 0;
-        box-shadow: 8px 8px 0px var(--electric-pink);
+        box-shadow: 6px 6px 0px var(--electric-pink);
     }
     
     .section:nth-child(even) {
-        box-shadow: -8px 8px 0px var(--electric-blue);
+        box-shadow: -6px 6px 0px var(--electric-blue);
     }
     
     .section:nth-child(3n) {
-        box-shadow: 8px -8px 0px var(--bright-yellow);
+        box-shadow: 6px -6px 0px var(--bright-yellow);
+    }
+    
+    /* Contact scenarios mobile adjustments */
+    .scenario-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .scenario-title-area h2 {
+        font-size: 1.6rem;
+    }
+    
+    .scenario-content {
+        padding: 1.5rem;
+    }
+    
+    .response-item {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+}
+
+/* Mobile Small (320px - 374px) */
+@media (max-width: 374px) {
+    .container {
+        padding: 0 0.8rem;
+    }
+    
+    .nav-container {
+        padding: 0.6rem;
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+    
+    .nav-brand {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
+    
+    .nav-menu {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-link {
+        font-size: 0.8rem;
+        padding: 5px 8px;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+        letter-spacing: 1px;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+        letter-spacing: 1px;
+    }
+    
+    .pop-title {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
+    
+    .portrait-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 240px;
+        gap: 0.3rem;
+    }
+    
+    .portrait-panel {
+        width: 100px;
+        height: 100px;
+        font-size: 2.4rem;
+    }
+    
+    .section {
+        margin: 0.8rem 0;
+        box-shadow: 4px 4px 0px var(--electric-pink);
+    }
+    
+    .section:nth-child(even) {
+        box-shadow: -4px 4px 0px var(--electric-blue);
+    }
+    
+    .section:nth-child(3n) {
+        box-shadow: 4px -4px 0px var(--bright-yellow);
+    }
+    
+    /* Ultra-compact contact layout */
+    .scenario-header {
+        padding: 1rem;
+    }
+    
+    .scenario-title-area h2 {
+        font-size: 1.4rem;
+    }
+    
+    .scenario-content {
+        padding: 1rem;
+    }
+    
+    .scenario-tags {
+        gap: 0.4rem;
+    }
+    
+    .scenario-tag {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+    }
+}
+
+/* High-DPI/Retina Display Adjustments */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .nav-brand {
+        text-shadow: 
+            1px 1px 0px var(--electric-pink),
+            2px 2px 0px var(--electric-blue),
+            3px 3px 0px var(--bright-yellow);
+    }
+    
+    .hero-title {
+        text-shadow: 
+            2px 2px 0px var(--electric-pink),
+            4px 4px 0px var(--electric-blue),
+            6px 6px 0px var(--bright-yellow);
+    }
+}
+
+/* Landscape Orientation Adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+    .nav-container {
+        padding: 0.5rem 1rem;
+    }
+    
+    .nav-brand {
+        font-size: 1.4rem;
+    }
+    
+    .nav-menu {
+        gap: 1rem;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .section-title {
+        font-size: 2.2rem;
     }
 }
 
@@ -2314,31 +2643,98 @@ html {
     letter-spacing: 1px;
 }
 
-/* Responsive design for contact scenarios */
-@media (max-width: 768px) {
-    .scenario-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
+/* ===== ADDITIONAL DEVICE COMPATIBILITY ENHANCEMENTS ===== */
+
+/* Touch-friendly interactions */
+@media (pointer: coarse) {
+    .nav-link,
+    .contact-value,
+    .scenario-tag,
+    .tab-btn,
+    .contact-action,
+    .project-link {
+        min-height: 44px;
+        min-width: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 16px;
     }
     
-    .scenario-title-area h2 {
-        font-size: 1.5rem;
-    }
-    
-    .contact-method {
-        flex-direction: column;
-        text-align: center;
-        gap: 0.5rem;
-    }
-    
-    .contact-label {
-        min-width: auto;
-    }
-    
-    .response-item {
-        flex-direction: column;
-        gap: 0.5rem;
-        text-align: center;
+    .portrait-panel {
+        min-height: 44px;
+        min-width: 44px;
     }
 }
+
+/* Print styles */
+@media print {
+    .navbar,
+    .contact-quick-links,
+    .scenario-tags {
+        display: none;
+    }
+    
+    .section {
+        box-shadow: none !important;
+        transform: none !important;
+        break-inside: avoid;
+    }
+    
+    .container {
+        max-width: none;
+        padding: 0;
+    }
+    
+    .hero-title,
+    .section-title {
+        color: var(--black) !important;
+        text-shadow: none !important;
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .portrait-panel {
+        animation: none !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .section {
+        border-width: 8px;
+    }
+    
+    .nav-link,
+    .contact-value,
+    .scenario-tag {
+        border: 2px solid;
+    }
+    
+    .scenario-card:hover {
+        outline: 3px solid;
+    }
+}
+
+/* Dark mode support (future-proofing) */
+@media (prefers-color-scheme: dark) {
+    /* Keep current bright pop art theme but adjust for extreme darkness if needed */
+    .hero-title,
+    .section-title {
+        text-shadow: 
+            3px 3px 0px var(--electric-pink),
+            6px 6px 0px var(--electric-blue),
+            9px 9px 0px var(--bright-yellow);
+    }
+}
+
