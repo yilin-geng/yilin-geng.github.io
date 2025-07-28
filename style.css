@@ -934,12 +934,10 @@ main {
     }
     
     .education-pin {
-        position: relative !important;
+        position: absolute !important;
         max-width: 100%;
         margin-bottom: 2rem;
         transform: rotate(0deg) !important;
-        top: auto !important;
-        left: auto !important;
     }
     
     .education-pinboard {

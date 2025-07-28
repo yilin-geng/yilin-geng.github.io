@@ -459,7 +459,7 @@ class PinboardDragHandler {
         
         pinboardPins.forEach(pin => {
             pin.style.cursor = 'grab';
-            pin.style.position = 'absolute';
+            pin.style.setProperty('position', 'absolute', 'important');
             
             pin.addEventListener('mousedown', (e) => this.startDrag(e, pin));
             pin.addEventListener('touchstart', (e) => this.startDrag(e, pin), { passive: false });
@@ -513,8 +513,8 @@ class PinboardDragHandler {
         newLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
         newTop = Math.max(minTop, Math.min(maxTop, newTop));
         
-        this.currentDragElement.style.left = newLeft + '%';
-        this.currentDragElement.style.top = newTop + '%';
+        this.currentDragElement.style.setProperty('left', newLeft + '%', 'important');
+        this.currentDragElement.style.setProperty('top', newTop + '%', 'important');
     }
 
     endDrag() {
