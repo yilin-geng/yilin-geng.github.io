@@ -24,32 +24,9 @@
             <div class="container">
                 <h1 class="section-title">Fun Stuff</h1>
                 
-                <!-- Photography Section -->
-                <div class="fun-section">
-                    <h2 class="pop-title">📷 Photography</h2>
-                    <div class="content-area">
-                        <p>I frequently go out to take photos, though I'm not a professional photographer - my main hobby is restoring vintage mechanical cameras and taking them out to shoot film.</p>
-                    </div>
-
-                    <div class="albums-showcase">
-                        <div class="albums-grid" id="albums-grid">
-                            <!-- Albums loaded dynamically -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Creative Projects Section -->
-                <div class="fun-section">
-                    <h2 class="pop-title">🎨 Creative Experiments</h2>
-                    <div class="content-area">
-                        <p>Small interactive experiments and games where creativity meets code in playful ways.</p>
-                    </div>
-
-                    <div class="projects-showcase">
-                        <div class="projects-grid" id="projects-grid">
-                            <!-- Projects loaded dynamically -->
-                        </div>
-                    </div>
+                <!-- Dynamic Content Sections - Loaded from file system -->
+                <div id="dynamic-content">
+                    <!-- Content sections will be generated dynamically -->
                 </div>
 
             </div>
@@ -63,102 +40,151 @@
     </footer>
 
     <script>
-        // Load albums from content/albums/ directory
-        async function loadAlbums() {
-            const albumsGrid = document.getElementById('albums-grid');
-            
-            try {
-                // Get list of album directories (fallback approach)
-                const albumNames = ['sample-album', 'urban-explorations', 'travel-moments', 'camera-collection'];
-                
-                const albums = [];
-                for (const albumName of albumNames) {
-                    try {
-                        const response = await fetch(`content/albums/${albumName}/info.json`);
-                        if (response.ok) {
-                            const albumInfo = await response.json();
-                            albumInfo.folderName = albumName;
-                            albums.push(albumInfo);
-                        }
-                    } catch (error) {
-                        console.log(`Could not load album: ${albumName}`);
-                    }
-                }
-
-                // Create album cards
-                albumsGrid.innerHTML = albums.map(album => `
-                    <div class="album-card warhol-style">
+        // Dynamic content type configurations
+        const contentTypes = {
+            albums: {
+                title: '📷 Photography',
+                description: 'I frequently go out to take photos, though I\'m not a professional photographer - my main hobby is restoring vintage mechanical cameras and taking them out to shoot film.',
+                folderNames: ['urban-explorations', 'travel-moments'],
+                cardClass: 'album-card warhol-style',
+                createCard: (item) => `
+                    <div class="${contentTypes.albums.cardClass}">
                         <div class="album-preview pink-preview">
-                            <div class="preview-text">${album.title.toUpperCase().replace(' ', '<br>')}</div>
+                            <div class="preview-text">${item.title.toUpperCase().replace(' ', '<br>')}</div>
                         </div>
                         <div class="album-info">
-                            <h3>${album.title}</h3>
-                            <p>${album.description}</p>
+                            <h3>${item.title}</h3>
+                            <p>${item.description}</p>
                             <div class="album-stats">
-                                <span class="stat">📸 ${album.date}</span>
+                                <span class="stat">📸 ${item.date || 'Date TBD'}</span>
                                 <span class="stat">🎞️ Film</span>
                             </div>
                         </div>
                     </div>
-                `).join('');
-
-            } catch (error) {
-                console.error('Error loading albums:', error);
-                albumsGrid.innerHTML = '<p>Albums coming soon...</p>';
+                `
+            },
+            projects: {
+                title: '🎨 Creative Experiments',
+                description: 'Small interactive experiments and games where creativity meets code in playful ways.',
+                folderNames: ['learning_arabic'],
+                cardClass: 'project-card pop-style',
+                createCard: (item) => {
+                    const getProjectIcon = (folderName) => {
+                        if (folderName.includes('arabic') || folderName.includes('learning')) return '📚';
+                        if (folderName.includes('game')) return '🎮';
+                        if (folderName.includes('visualization')) return '📊';
+                        return '⚡';
+                    };
+                    
+                    const getProjectType = (folderName) => {
+                        if (folderName.includes('arabic') || folderName.includes('learning')) return 'LEARNING<br>PLATFORM';
+                        if (folderName.includes('game')) return 'INTERACTIVE<br>GAME';
+                        if (folderName.includes('visualization')) return 'DATA<br>VIZ';
+                        return 'INTERACTIVE<br>PROJECT';
+                    };
+                    
+                    const getActionText = (folderName) => {
+                        if (folderName.includes('arabic') || folderName.includes('learning')) return 'START LEARNING';
+                        if (folderName.includes('game')) return 'PLAY NOW';
+                        return 'EXPLORE';
+                    };
+                    
+                    return `
+                        <div class="${contentTypes.projects.cardClass}">
+                            <div class="project-preview game-preview">
+                                <div class="preview-icon">${getProjectIcon(item.folderName)}</div>
+                                <div class="preview-text">${getProjectType(item.folderName)}</div>
+                            </div>
+                            <div class="project-info">
+                                <h3>${item.title}</h3>
+                                <p>${item.description}</p>
+                                <div class="project-links">
+                                    <a href="content/${item.contentType}/${item.folderName}/index.html" class="project-link" target="_blank">${getActionText(item.folderName)}</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
             }
-        }
+        };
 
-        // Load projects from content/projects/ directory
-        async function loadProjects() {
-            const projectsGrid = document.getElementById('projects-grid');
-            
+        // Generic content loader
+        async function loadContentType(contentType, config) {
             try {
-                // Get list of project directories (fallback approach)
-                const projectNames = ['sample-game']; // Will be expanded dynamically
+                const items = [];
                 
-                const projects = [];
-                for (const projectName of projectNames) {
+                for (const folderName of config.folderNames) {
                     try {
-                        const response = await fetch(`content/projects/${projectName}/info.json`);
+                        const response = await fetch(`content/${contentType}/${folderName}/info.json`);
                         if (response.ok) {
-                            const projectInfo = await response.json();
-                            projectInfo.folderName = projectName;
-                            projects.push(projectInfo);
+                            const itemInfo = await response.json();
+                            itemInfo.folderName = folderName;
+                            itemInfo.contentType = contentType;
+                            items.push(itemInfo);
                         }
                     } catch (error) {
-                        console.log(`Could not load project: ${projectName}`);
+                        console.log(`Could not load ${contentType}: ${folderName}`);
                     }
                 }
 
-                // Create project cards
-                projectsGrid.innerHTML = projects.map(project => `
-                    <div class="project-card pop-style">
-                        <div class="project-preview game-preview">
-                            <div class="preview-icon">🎮</div>
-                            <div class="preview-text">INTERACTIVE<br>PROJECT</div>
-                        </div>
-                        <div class="project-info">
-                            <h3>${project.title}</h3>
-                            <p>${project.description}</p>
-                            <div class="project-links">
-                                <a href="content/projects/${project.folderName}/index.html" class="project-link" target="_blank">PLAY NOW</a>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-
+                return items;
             } catch (error) {
-                console.error('Error loading projects:', error);
-                projectsGrid.innerHTML = '<p>Projects coming soon...</p>';
+                console.error(`Error loading ${contentType}:`, error);
+                return [];
             }
         }
 
-        // Load content on page load
+        // Generate dynamic sections
+        async function generateDynamicContent() {
+            const dynamicContentContainer = document.getElementById('dynamic-content');
+            const allSections = [];
+
+            // Load all content types
+            for (const [contentType, config] of Object.entries(contentTypes)) {
+                const items = await loadContentType(contentType, config);
+                
+                // Only create section if items exist
+                if (items.length > 0) {
+                    const sectionId = `${contentType}-section`;
+                    const gridId = `${contentType}-grid`;
+                    
+                    const sectionHTML = `
+                        <div class="fun-section" id="${sectionId}">
+                            <h2 class="pop-title">${config.title}</h2>
+                            <div class="content-area">
+                                <p>${config.description}</p>
+                            </div>
+                            <div class="${contentType}-showcase">
+                                <div class="${contentType}-grid" id="${gridId}">
+                                    ${items.map(item => config.createCard(item)).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    allSections.push(sectionHTML);
+                }
+            }
+
+            // Add all sections to the page
+            dynamicContentContainer.innerHTML = allSections.join('');
+            
+            // If no content found, show a message
+            if (allSections.length === 0) {
+                dynamicContentContainer.innerHTML = `
+                    <div class="fun-section">
+                        <h2 class="pop-title">🚧 Content Coming Soon</h2>
+                        <div class="content-area">
+                            <p>Fun stuff is being prepared! Check back soon for interactive projects and creative experiments.</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Load all dynamic content on page load
         document.addEventListener('DOMContentLoaded', async () => {
-            await Promise.all([
-                loadAlbums(),
-                loadProjects()
-            ]);
+            await generateDynamicContent();
         });
     </script>
 </body>

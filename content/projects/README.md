@@ -60,29 +60,41 @@ Your project can include any web technologies:
 - Data visualizations
 - Creative coding experiments
 
-### 6. Update JavaScript (Optional)
+### 6. Update Project List (Required)
 
-For automatic discovery, add your project directory name to the `projectNames` array in `projects.html`:
+**IMPORTANT**: Projects use a curated discovery system. After creating your project, you must add the directory name to the `folderNames` array in `projects.html`:
 
 ```javascript
-const projectNames = ['sample-game', 'your-new-project'];
+// In projects.html - Find the contentTypes.projects section
+projects: {
+    title: '🎨 Creative Experiments',
+    description: '...',
+    folderNames: ['learning_arabic', 'your-new-project'], // Add here
+    // ...
+}
 ```
+
+This curated approach ensures:
+- Only completed, tested projects appear on the site
+- No broken links or 404 errors
+- Professional presentation of working features
+- Better performance (no unnecessary HTTP requests)
 
 ### 7. Example Structure
 
 ```
 content/projects/
-├── sample-game/
+├── learning_arabic/           # Arabic learning platform
 │   ├── info.json
 │   ├── index.html
 │   ├── style.css
 │   ├── script.js
-│   └── screenshot.png
-├── algorithm-visualizer/
+│   └── step*-design.md       # Design documentation
+├── algorithm-visualizer/      # Example future project
 │   ├── info.json
 │   ├── index.html
 │   └── assets/
-└── your-new-project/
+└── your-new-project/          # Your new project
     ├── info.json
     ├── index.html
     └── ...
@@ -110,4 +122,18 @@ content/projects/
 - Add smooth animations and transitions
 - Ensure good contrast and accessibility
 
-Projects automatically appear on the Fun Stuff page once the directory, `info.json`, and `index.html` are created!
+## Current Projects
+
+- **learning_arabic**: Interactive Arabic language learning platform with progressive levels
+- *(Add your new projects here)*
+
+## Deployment Checklist
+
+1. ✅ Create project directory with descriptive name
+2. ✅ Add `info.json` with title, description, and metadata  
+3. ✅ Create `index.html` as main entry point
+4. ✅ Test project works independently 
+5. ✅ **Add directory name to `folderNames` array in `projects.html`**
+6. ✅ Verify project appears on Fun Stuff page
+
+Projects appear on the Fun Stuff page only after completing ALL steps above!

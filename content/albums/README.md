@@ -38,13 +38,25 @@ Place your photo files in the same directory as `info.json`. Supported formats:
 - PNG
 - WebP
 
-### 5. Update JavaScript (Optional)
+### 5. Update Album List (Required)
 
-For automatic discovery, add your album directory name to the `albumNames` array in `projects.html`:
+**IMPORTANT**: Albums use a curated discovery system. After creating your album, you must add the directory name to the `folderNames` array in `projects.html`:
 
 ```javascript
-const albumNames = ['sample-album', 'urban-explorations', 'your-new-album'];
+// In projects.html - Find the contentTypes.albums section
+albums: {
+    title: '📷 Photography',
+    description: '...',
+    folderNames: ['urban-explorations', 'travel-moments', 'your-new-album'], // Add here
+    // ...
+}
 ```
+
+This curated approach ensures:
+- Only completed albums with proper metadata appear
+- No broken links or missing images
+- Professional presentation of polished collections
+- Better performance (no unnecessary HTTP requests)
 
 ### 6. Example Structure
 
@@ -64,11 +76,19 @@ content/albums/
     └── photo1.jpg
 ```
 
-## Existing Albums
+## Current Albums
 
-- **sample-album**: Template example album
 - **urban-explorations**: Street photography from various cities
 - **travel-moments**: Travel and landscape photography  
-- **camera-collection**: Vintage camera restoration documentation
+- *(Add your new albums here)*
 
-Albums automatically appear on the Fun Stuff page once the directory and `info.json` are created!
+## Deployment Checklist
+
+1. ✅ Create album directory with descriptive name
+2. ✅ Add `info.json` with title, description, date, and metadata
+3. ✅ Add photos to the directory
+4. ✅ Test preview image displays correctly
+5. ✅ **Add directory name to `folderNames` array in `projects.html`**
+6. ✅ Verify album appears on Fun Stuff page
+
+Albums appear on the Fun Stuff page only after completing ALL steps above!

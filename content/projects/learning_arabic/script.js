@@ -1,50 +1,21 @@
-// Arabic Learning Platform - Interactive JavaScript
+// Arabic Learning Platform - Enhanced Interactive JavaScript
 
-// Arabic alphabet data
-const arabicAlphabet = [
-    { letter: 'ا', name: 'alif', sound: 'a', position: 1 },
-    { letter: 'ب', name: 'ba', sound: 'b', position: 2 },
-    { letter: 'ت', name: 'ta', sound: 't', position: 3 },
-    { letter: 'ث', name: 'tha', sound: 'th', position: 4 },
-    { letter: 'ج', name: 'jim', sound: 'j', position: 5 },
-    { letter: 'ح', name: 'ha', sound: 'ḥ', position: 6 },
-    { letter: 'خ', name: 'kha', sound: 'kh', position: 7 },
-    { letter: 'د', name: 'dal', sound: 'd', position: 8 },
-    { letter: 'ذ', name: 'dhal', sound: 'dh', position: 9 },
-    { letter: 'ر', name: 'ra', sound: 'r', position: 10 },
-    { letter: 'ز', name: 'zay', sound: 'z', position: 11 },
-    { letter: 'س', name: 'sin', sound: 's', position: 12 },
-    { letter: 'ش', name: 'shin', sound: 'sh', position: 13 },
-    { letter: 'ص', name: 'sad', sound: 'ṣ', position: 14 },
-    { letter: 'ض', name: 'dad', sound: 'ḍ', position: 15 },
-    { letter: 'ط', name: 'ta', sound: 'ṭ', position: 16 },
-    { letter: 'ظ', name: 'za', sound: 'ẓ', position: 17 },
-    { letter: 'ع', name: 'ayn', sound: 'ʿ', position: 18 },
-    { letter: 'غ', name: 'ghayn', sound: 'gh', position: 19 },
-    { letter: 'ف', name: 'fa', sound: 'f', position: 20 },
-    { letter: 'ق', name: 'qaf', sound: 'q', position: 21 },
-    { letter: 'ك', name: 'kaf', sound: 'k', position: 22 },
-    { letter: 'ل', name: 'lam', sound: 'l', position: 23 },
-    { letter: 'م', name: 'mim', sound: 'm', position: 24 },
-    { letter: 'ن', name: 'nun', sound: 'n', position: 25 },
-    { letter: 'ه', name: 'ha', sound: 'h', position: 26 },
-    { letter: 'و', name: 'waw', sound: 'w', position: 27 },
-    { letter: 'ي', name: 'ya', sound: 'y', position: 28 }
-];
+// Use enhanced audio data from audio-data.js
+const arabicAlphabet = Object.keys(ArabicAudio.letters).map((letter, index) => ({
+    letter: letter,
+    name: ArabicAudio.letters[letter].name,
+    sound: ArabicAudio.letters[letter].phonetic,
+    englishSound: ArabicAudio.letters[letter].englishSound,
+    examples: ArabicAudio.letters[letter].examples,
+    position: index + 1
+}));
 
-// Arabic numbers data
-const arabicNumbers = [
-    { arabic: '١', english: '1', word: 'واحد', transliteration: 'wahid' },
-    { arabic: '٢', english: '2', word: 'اثنان', transliteration: 'ithnan' },
-    { arabic: '٣', english: '3', word: 'ثلاثة', transliteration: 'thalatha' },
-    { arabic: '٤', english: '4', word: 'أربعة', transliteration: 'arba\'a' },
-    { arabic: '٥', english: '5', word: 'خمسة', transliteration: 'khamsa' },
-    { arabic: '٦', english: '6', word: 'ستة', transliteration: 'sitta' },
-    { arabic: '٧', english: '7', word: 'سبعة', transliteration: 'sab\'a' },
-    { arabic: '٨', english: '8', word: 'ثمانية', transliteration: 'thamaniya' },
-    { arabic: '٩', english: '9', word: 'تسعة', transliteration: 'tis\'a' },
-    { arabic: '١٠', english: '10', word: 'عشرة', transliteration: 'ashara' }
-];
+const arabicNumbers = Object.keys(ArabicAudio.numbers).map(arabicNum => ({
+    arabic: arabicNum,
+    english: ArabicAudio.numbers[arabicNum].english,
+    word: ArabicAudio.numbers[arabicNum].arabic,
+    phonetic: ArabicAudio.numbers[arabicNum].phonetic
+}));
 
 // Current game state
 let currentLevel = 'intro';
@@ -52,24 +23,35 @@ let currentLetter = null;
 let currentProgress = 0;
 
 // Initialize app when DOM loads
-document.addEventListener('DOMContentLoaded', function() {
-    initializeApp();
+document.addEventListener('DOMContentLoaded', async function() {
+    console.log('DOM Content Loaded - Starting Arabic Learning Platform');
+    await initializeApp();
 });
 
-function initializeApp() {
+async function initializeApp() {
+    // Load voices first for better pronunciation
+    await ArabicAudio.loadVoices();
+    
     setupNavigation();
     generateAlphabet();
     generateNumbers();
     initializeRecognitionGame();
+    initializeGreetingPractice();
     showLevel('intro');
+    
+    console.log('Arabic Learning Platform initialized with enhanced audio');
 }
 
 // Navigation functionality
 function setupNavigation() {
     const navItems = document.querySelectorAll('.nav-item');
+    console.log('Found nav items:', navItems.length);
+    
     navItems.forEach(item => {
+        console.log('Setting up navigation for:', item.dataset.level);
         item.addEventListener('click', () => {
             const level = item.dataset.level;
+            console.log('Navigation clicked:', level);
             showLevel(level);
             
             // Update active nav item
@@ -80,22 +62,29 @@ function setupNavigation() {
 }
 
 function showLevel(levelId) {
+    console.log('Showing level:', levelId);
+    
     // Hide all sections
     const sections = document.querySelectorAll('.level-section');
+    console.log('Found sections:', sections.length);
     sections.forEach(section => {
         section.classList.remove('active');
     });
     
     // Show target section
     const targetSection = document.getElementById(levelId);
+    console.log('Target section found:', !!targetSection);
     if (targetSection) {
         targetSection.classList.add('active');
         currentLevel = levelId;
+        console.log('Level changed to:', currentLevel);
         
         // Update progress for non-intro levels
         if (levelId !== 'intro') {
             updateProgress(levelId);
         }
+    } else {
+        console.error('Section not found:', levelId);
     }
 }
 
@@ -118,9 +107,21 @@ function updateProgress(level) {
 
 // Start learning from intro
 function startLearning() {
+    console.log('Start Learning clicked');
     showLevel('foundation');
-    document.querySelector('[data-level="foundation"]').classList.add('active');
-    document.querySelector('[data-level="intro"]').classList.remove('active');
+    
+    // Update nav buttons
+    const foundationBtn = document.querySelector('[data-level="foundation"]');
+    const introBtn = document.querySelector('[data-level="intro"]');
+    
+    if (foundationBtn) {
+        foundationBtn.classList.add('active');
+        console.log('Foundation button made active');
+    }
+    if (introBtn) {
+        introBtn.classList.remove('active');
+        console.log('Intro button made inactive');
+    }
 }
 
 // Alphabet generation
@@ -147,16 +148,17 @@ function generateAlphabet() {
 }
 
 function playLetterSound(letterData) {
-    // Create speech synthesis for Arabic letter
-    if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(letterData.name);
-        utterance.lang = 'ar';
-        utterance.rate = 0.8;
-        speechSynthesis.speak(utterance);
-    }
+    // Use enhanced audio system
+    const success = ArabicAudio.speak(letterData.letter, {
+        phonetic: letterData.sound,
+        rate: 0.7,
+        onStart: () => console.log(`Playing: ${letterData.letter} (${letterData.name})`),
+        onEnd: () => console.log(`Finished: ${letterData.letter}`)
+    });
     
-    // Show letter information (could be expanded)
-    console.log(`Playing sound for: ${letterData.letter} (${letterData.name})`);
+    if (!success) {
+        console.warn('Could not play letter sound:', letterData.letter);
+    }
 }
 
 function highlightLetter(letterCard) {
@@ -243,19 +245,22 @@ function generateNumbers() {
 
 function playNumber(number) {
     const numberData = arabicNumbers.find(n => parseInt(n.english) === number);
-    if (numberData && 'speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(numberData.word);
-        utterance.lang = 'ar';
-        utterance.rate = 0.8;
-        speechSynthesis.speak(utterance);
+    if (numberData) {
+        ArabicAudio.speak(numberData.word, {
+            phonetic: numberData.phonetic,
+            rate: 0.7
+        });
+        
+        // Visual feedback
+        const numberItems = document.querySelectorAll('.number-item');
+        const targetItem = numberItems[number - 1];
+        if (targetItem) {
+            targetItem.classList.add('playing');
+            setTimeout(() => {
+                targetItem.classList.remove('playing');
+            }, 1000);
+        }
     }
-    
-    // Visual feedback
-    const numberItems = document.querySelectorAll('.number-item');
-    numberItems[number - 1]?.classList.add('playing');
-    setTimeout(() => {
-        numberItems[number - 1]?.classList.remove('playing');
-    }, 1000);
 }
 
 // Recognition Game
@@ -343,103 +348,502 @@ function checkAnswer(selectedSound) {
     }
 }
 
-// Greeting functions
+// Letter Connections functionality
+function showLetterForms() {
+    const letterSelector = document.getElementById('letterSelector');
+    const selectedLetter = letterSelector.value;
+    
+    if (!selectedLetter || !ArabicAudio.letterForms[selectedLetter]) {
+        // Clear displays if no selection
+        document.getElementById('isolatedForm').textContent = '-';
+        document.getElementById('initialForm').textContent = '-';
+        document.getElementById('medialForm').textContent = '-';
+        document.getElementById('finalForm').textContent = '-';
+        document.getElementById('exampleWordsList').innerHTML = '';
+        return;
+    }
+    
+    const letterData = ArabicAudio.letterForms[selectedLetter];
+    
+    // Update letter forms display
+    document.getElementById('isolatedForm').textContent = letterData.isolated;
+    document.getElementById('initialForm').textContent = letterData.initial;
+    document.getElementById('medialForm').textContent = letterData.medial;
+    document.getElementById('finalForm').textContent = letterData.final;
+    
+    // Update example words
+    const examplesList = document.getElementById('exampleWordsList');
+    examplesList.innerHTML = '';
+    
+    letterData.examples.forEach(word => {
+        const wordElement = document.createElement('div');
+        wordElement.className = 'example-word';
+        wordElement.innerHTML = `
+            <span class="arabic-word">${word}</span>
+            <button class="play-word-btn" onclick="playWord('${word}')" title="Play pronunciation">🔊</button>
+        `;
+        examplesList.appendChild(wordElement);
+    });
+    
+    // Add visual feedback
+    const forms = document.querySelectorAll('.form-letter');
+    forms.forEach(form => {
+        form.style.animation = 'letterReveal 0.5s ease-out';
+    });
+}
+
+function playWord(word) {
+    ArabicAudio.speak(word, {
+        rate: 0.6,
+        onStart: () => {
+            const buttons = document.querySelectorAll('.play-word-btn');
+            buttons.forEach(btn => {
+                if (btn.onclick.toString().includes(word)) {
+                    btn.style.transform = 'scale(1.2)';
+                    btn.style.background = 'var(--secondary-color)';
+                }
+            });
+        },
+        onEnd: () => {
+            const buttons = document.querySelectorAll('.play-word-btn');
+            buttons.forEach(btn => {
+                if (btn.onclick.toString().includes(word)) {
+                    btn.style.transform = 'scale(1)';
+                    btn.style.background = 'var(--accent-color)';
+                }
+            });
+        }
+    });
+}
+
+// Enhanced Greeting functions
 function playGreeting(greeting) {
-    const greetings = {
+    const greetingMap = {
         'salam': 'السلام عليكم',
         'ahlan': 'أهلاً وسهلاً',
-        'kayf-halak': 'كيف حالك؟'
+        'marhaban': 'مرحباً',
+        'kayf-halak': 'كيف حالك؟',
+        'kayf-halik': 'كيف حالكِ؟',
+        'hamdulillah': 'الحمد لله',
+        'bikhayr': 'بخير، شكراً',
+        'ma-salamah': 'مع السلامة',
+        'ila-liqa': 'إلى اللقاء'
     };
     
-    const arabicText = greetings[greeting];
-    if (arabicText && 'speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(arabicText);
-        utterance.lang = 'ar';
-        utterance.rate = 0.8;
-        speechSynthesis.speak(utterance);
+    const arabicText = greetingMap[greeting];
+    if (arabicText && ArabicAudio.greetings[arabicText]) {
+        const greetingData = ArabicAudio.greetings[arabicText];
+        ArabicAudio.speak(arabicText, {
+            phonetic: greetingData.phonetic,
+            rate: 0.7,
+            onStart: () => {
+                // Visual feedback for the greeting being played
+                const greetingItems = document.querySelectorAll('.greeting-item');
+                greetingItems.forEach(item => {
+                    if (item.dataset.greeting === arabicText) {
+                        item.style.transform = 'scale(1.05)';
+                        item.style.background = 'var(--gradient-arabic)';
+                        item.style.color = 'white';
+                    }
+                });
+            },
+            onEnd: () => {
+                // Reset visual feedback
+                const greetingItems = document.querySelectorAll('.greeting-item');
+                greetingItems.forEach(item => {
+                    if (item.dataset.greeting === arabicText) {
+                        item.style.transform = 'scale(1)';
+                        item.style.background = '';
+                        item.style.color = '';
+                    }
+                });
+            }
+        });
     }
 }
 
-// Conversation Simulator
-function sendResponse(arabicResponse, englishResponse) {
-    const chatWindow = document.getElementById('chatWindow');
+// Greeting Practice functionality
+let currentGreetingQuestion = 0;
+const greetingQuestions = [
+    {
+        question: 'السلام عليكم',
+        questionEn: 'Peace be upon you',
+        correct: 'وعليكم السلام',
+        options: ['وعليكم السلام', 'أهلاً وسهلاً', 'مع السلامة']
+    },
+    {
+        question: 'كيف حالك؟',
+        questionEn: 'How are you?',
+        correct: 'الحمد لله',
+        options: ['الحمد لله', 'مرحباً', 'شكراً']
+    },
+    {
+        question: 'شكراً',
+        questionEn: 'Thank you',
+        correct: 'عفواً',
+        options: ['عفواً', 'بخير', 'إلى اللقاء']
+    }
+];
+
+function initializeGreetingPractice() {
+    loadGreetingQuestion();
+}
+
+function loadGreetingQuestion() {
+    const question = greetingQuestions[currentGreetingQuestion];
+    document.getElementById('practiceQuestion').textContent = question.question;
+    document.getElementById('practiceQuestionEn').textContent = question.questionEn;
     
-    // Create user message
+    // Update option buttons
+    const practiceButtons = document.querySelectorAll('.practice-btn');
+    question.options.forEach((option, index) => {
+        if (practiceButtons[index]) {
+            practiceButtons[index].textContent = option;
+            practiceButtons[index].onclick = () => checkGreetingAnswer(option);
+            practiceButtons[index].classList.remove('correct', 'incorrect');
+        }
+    });
+    
+    // Clear feedback
+    document.getElementById('greetingFeedback').textContent = '';
+    document.getElementById('greetingFeedback').className = 'practice-feedback';
+}
+
+function checkGreetingAnswer(answer) {
+    const question = greetingQuestions[currentGreetingQuestion];
+    const feedback = document.getElementById('greetingFeedback');
+    const practiceButtons = document.querySelectorAll('.practice-btn');
+    
+    if (answer === question.correct) {
+        feedback.textContent = 'ممتاز! Excellent!';
+        feedback.className = 'practice-feedback success';
+        
+        // Highlight correct button
+        practiceButtons.forEach(btn => {
+            if (btn.textContent === answer) {
+                btn.classList.add('correct');
+            }
+        });
+        
+        // Move to next question after delay
+        setTimeout(() => {
+            currentGreetingQuestion = (currentGreetingQuestion + 1) % greetingQuestions.length;
+            loadGreetingQuestion();
+        }, 2000);
+        
+    } else {
+        feedback.textContent = `خطأ - Wrong! The correct answer is "${question.correct}"`;
+        feedback.className = 'practice-feedback error';
+        
+        // Highlight correct and incorrect buttons
+        practiceButtons.forEach(btn => {
+            if (btn.textContent === answer) {
+                btn.classList.add('incorrect');
+            } else if (btn.textContent === question.correct) {
+                btn.classList.add('correct');
+            }
+        });
+        
+        setTimeout(() => {
+            loadGreetingQuestion();
+        }, 3000);
+    }
+}
+
+// Enhanced Conversation Simulator
+let conversationStep = 1;
+let conversationScenario = 0;
+
+const conversationScenarios = [
+    {
+        title: "Meeting Someone New",
+        description: "You're meeting Ahmed, a new colleague. Practice the greeting exchange.",
+        steps: [
+            {
+                message: { arabic: 'السلام عليكم', transliteration: 'as-salāmu ʿalaykum', english: 'Peace be upon you' },
+                responses: [
+                    { arabic: 'وعليكم السلام', transliteration: 'wa ʿalaykumu as-salām', english: 'And upon you peace', correct: true },
+                    { arabic: 'شكراً', transliteration: 'shukran', english: 'Thank you', correct: false },
+                    { arabic: 'مع السلامة', transliteration: 'maʿa as-salāma', english: 'Goodbye', correct: false }
+                ],
+                tip: '"السلام عليكم" is the traditional Islamic greeting. The proper response is "وعليكم السلام" which mirrors back the greeting.',
+                feedback: {
+                    correct: 'Perfect! You responded with the traditional Islamic greeting response.',
+                    incorrect: 'In Arabic culture, when someone says "السلام عليكم", the proper response is "وعليكم السلام".'
+                }
+            },
+            {
+                message: { arabic: 'كيف حالك؟', transliteration: 'kayf ḥālak?', english: 'How are you?' },
+                responses: [
+                    { arabic: 'الحمد لله', transliteration: 'al-ḥamdu lillāh', english: 'Praise be to God', correct: true },
+                    { arabic: 'مرحباً', transliteration: 'marḥaban', english: 'Hello', correct: false },
+                    { arabic: 'إلى اللقاء', transliteration: 'ilā al-liqā\'', english: 'See you later', correct: false }
+                ],
+                tip: '"الحمد لله" is a common response meaning you\'re doing well by God\'s grace.',
+                feedback: {
+                    correct: 'Excellent! "الحمد لله" shows gratitude and is a culturally appropriate response.',
+                    incorrect: 'When asked "كيف حالك?" (How are you?), "الحمد لله" is the most common positive response.'
+                }
+            },
+            {
+                message: { arabic: 'ما اسمك؟', transliteration: 'mā ismuk?', english: 'What is your name?' },
+                responses: [
+                    { arabic: 'اسمي...', transliteration: 'ismī...', english: 'My name is...', correct: true },
+                    { arabic: 'شكراً', transliteration: 'shukran', english: 'Thank you', correct: false },
+                    { arabic: 'بخير', transliteration: 'bi-khayr', english: 'Fine', correct: false }
+                ],
+                tip: 'Use "اسمي" (my name is) to introduce yourself.',
+                feedback: {
+                    correct: 'Great! You properly introduced yourself using "اسمي".',
+                    incorrect: 'When asked for your name, respond with "اسمي" followed by your name.'
+                }
+            },
+            {
+                message: { arabic: 'تشرفنا بلقائك', transliteration: 'tasharrafnā bi-liqā\'ik', english: 'Pleased to meet you' },
+                responses: [
+                    { arabic: 'وأنا كذلك', transliteration: 'wa anā kadhālik', english: 'Me too / Likewise', correct: true },
+                    { arabic: 'السلام عليكم', transliteration: 'as-salāmu ʿalaykum', english: 'Peace be upon you', correct: false },
+                    { arabic: 'كيف حالك؟', transliteration: 'kayf ḥālak?', english: 'How are you?', correct: false }
+                ],
+                tip: '"وأنا كذلك" means "me too" or "likewise" - perfect for responding to "pleased to meet you".',
+                feedback: {
+                    correct: 'Perfect! You responded appropriately with "وأنا كذلك" (likewise).',
+                    incorrect: 'When someone says they\'re pleased to meet you, "وأنا كذلك" (likewise) is the appropriate response.'
+                }
+            }
+        ]
+    }
+];
+
+function handleConversationResponse(arabic, transliteration, english, isCorrect) {
+    const chatWindow = document.getElementById('chatWindow');
+    const responseSection = document.getElementById('responseSection');
+    const culturalTip = document.getElementById('culturalTip');
+    
+    // Add user's response to chat
     const userMessage = document.createElement('div');
     userMessage.className = 'message sent';
     userMessage.innerHTML = `
-        <div class="arabic">${arabicResponse}</div>
-        <div class="english">${englishResponse}</div>
+        <div class="arabic">${arabic}</div>
+        <div class="transliteration">${transliteration}</div>
+        <div class="english">${english}</div>
     `;
-    
     chatWindow.appendChild(userMessage);
     
-    // Scroll to bottom
-    chatWindow.scrollTop = chatWindow.scrollHeight;
+    // Hide response section temporarily
+    responseSection.style.display = 'none';
     
-    // Generate AI response after delay
+    const currentScenario = conversationScenarios[conversationScenario];
+    const currentStepData = currentScenario.steps[conversationStep - 1];
+    
+    // Show feedback
     setTimeout(() => {
-        generateAIResponse();
-    }, 1500);
+        const feedbackMessage = document.createElement('div');
+        feedbackMessage.className = `message received ${isCorrect ? 'success' : 'error'}`;
+        feedbackMessage.innerHTML = `
+            <div class="feedback-text">${isCorrect ? currentStepData.feedback.correct : currentStepData.feedback.incorrect}</div>
+        `;
+        chatWindow.appendChild(feedbackMessage);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+        
+        // Move to next step or complete conversation
+        setTimeout(() => {
+            if (conversationStep < currentScenario.steps.length) {
+                conversationStep++;
+                loadNextConversationStep();
+            } else {
+                completeConversation();
+            }
+        }, 2000);
+    }, 1000);
+    
+    chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
-function generateAIResponse() {
-    const responses = [
-        { arabic: 'كيف حالك؟', english: 'How are you?' },
-        { arabic: 'ما اسمك؟', english: 'What is your name?' },
-        { arabic: 'من أين أنت؟', english: 'Where are you from?' },
-        { arabic: 'أهلاً وسهلاً', english: 'Welcome' }
-    ];
-    
-    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+function loadNextConversationStep() {
     const chatWindow = document.getElementById('chatWindow');
+    const responseSection = document.getElementById('responseSection');
+    const culturalTip = document.getElementById('culturalTip');
+    const currentStepEl = document.getElementById('currentStep');
+    const progressBar = document.getElementById('conversationProgress');
     
+    const currentScenario = conversationScenarios[conversationScenario];
+    const currentStepData = currentScenario.steps[conversationStep - 1];
+    
+    // Add Ahmed's next message
     const aiMessage = document.createElement('div');
     aiMessage.className = 'message received';
     aiMessage.innerHTML = `
-        <div class="arabic">${randomResponse.arabic}</div>
-        <div class="english">${randomResponse.english}</div>
+        <div class="arabic">${currentStepData.message.arabic}</div>
+        <div class="transliteration">${currentStepData.message.transliteration}</div>
+        <div class="english">${currentStepData.message.english}</div>
+    `;
+    chatWindow.appendChild(aiMessage);
+    
+    // Update response options
+    const responseOptions = document.getElementById('responseOptions');
+    responseOptions.innerHTML = '';
+    
+    currentStepData.responses.forEach(response => {
+        const button = document.createElement('button');
+        button.className = `response-btn ${response.correct ? 'correct' : ''}`;
+        button.innerHTML = `
+            <div class="option-arabic">${response.arabic}</div>
+            <div class="option-english">${response.english}</div>
+        `;
+        button.onclick = () => handleConversationResponse(
+            response.arabic, 
+            response.transliteration, 
+            response.english, 
+            response.correct
+        );
+        responseOptions.appendChild(button);
+    });
+    
+    // Update cultural tip
+    culturalTip.querySelector('.tip-content').innerHTML = `
+        <strong>Cultural Tip:</strong> ${currentStepData.tip}
     `;
     
-    chatWindow.appendChild(aiMessage);
+    // Update progress
+    currentStepEl.textContent = conversationStep;
+    const progressPercent = (conversationStep / currentScenario.steps.length) * 100;
+    progressBar.style.width = progressPercent + '%';
+    
+    // Show response section
+    responseSection.style.display = 'block';
     chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+function completeConversation() {
+    const chatWindow = document.getElementById('chatWindow');
+    const responseSection = document.getElementById('responseSection');
+    
+    // Add completion message
+    const completionMessage = document.createElement('div');
+    completionMessage.className = 'message received success';
+    completionMessage.innerHTML = `
+        <div class="completion-text">
+            <strong>🎉 تهانينا! Congratulations!</strong><br>
+            You've successfully completed this conversation scenario. 
+            You've learned the proper way to greet someone and respond culturally appropriately in Arabic.
+        </div>
+    `;
+    chatWindow.appendChild(completionMessage);
+    
+    // Hide response section and show controls
+    responseSection.style.display = 'none';
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+function restartConversation() {
+    conversationStep = 1;
+    const chatWindow = document.getElementById('chatWindow');
+    const responseSection = document.getElementById('responseSection');
+    const currentStepEl = document.getElementById('currentStep');
+    const progressBar = document.getElementById('conversationProgress');
+    
+    // Reset chat window to initial state
+    chatWindow.innerHTML = `
+        <div class="conversation-start">
+            <div class="character-intro">
+                <div class="character-avatar">👨</div>
+                <div class="character-name">Ahmed</div>
+            </div>
+            <div class="message received" id="initialMessage">
+                <div class="arabic">السلام عليكم</div>
+                <div class="transliteration">as-salāmu ʿalaykum</div>
+                <div class="english">Peace be upon you</div>
+            </div>
+        </div>
+    `;
+    
+    // Reset progress
+    currentStepEl.textContent = '1';
+    progressBar.style.width = '25%';
+    
+    // Reset response section
+    const responseOptions = document.getElementById('responseOptions');
+    const firstStepData = conversationScenarios[conversationScenario].steps[0];
+    
+    responseOptions.innerHTML = '';
+    firstStepData.responses.forEach(response => {
+        const button = document.createElement('button');
+        button.className = `response-btn ${response.correct ? 'correct' : ''}`;
+        button.innerHTML = `
+            <div class="option-arabic">${response.arabic}</div>
+            <div class="option-english">${response.english}</div>
+        `;
+        button.onclick = () => handleConversationResponse(
+            response.arabic, 
+            response.transliteration, 
+            response.english, 
+            response.correct
+        );
+        responseOptions.appendChild(button);
+    });
+    
+    responseSection.style.display = 'block';
+}
+
+function nextScenario() {
+    // For now, just restart the same scenario
+    // In the future, this could load different scenarios
+    restartConversation();
 }
 
 // Navigation between levels
 function nextLevel() {
-    const levels = ['intro', 'foundation', 'building', 'structure', 'communication', 'fluency'];
+    const levels = ['intro', 'foundation', 'building', 'completion'];
     const currentIndex = levels.indexOf(currentLevel);
     
     if (currentIndex < levels.length - 1) {
-        const nextLevel = levels[currentIndex + 1];
-        showLevel(nextLevel);
+        const nextLevelName = levels[currentIndex + 1];
+        showLevel(nextLevelName);
         
         // Update nav
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.classList.remove('active');
-            if (item.dataset.level === nextLevel) {
-                item.classList.add('active');
-            }
-        });
+        updateActiveNav(nextLevelName);
     }
 }
 
 function previousLevel() {
-    const levels = ['intro', 'foundation', 'building', 'structure', 'communication', 'fluency'];
+    const levels = ['intro', 'foundation', 'building', 'completion'];
     const currentIndex = levels.indexOf(currentLevel);
     
     if (currentIndex > 0) {
-        const prevLevel = levels[currentIndex - 1];
-        showLevel(prevLevel);
+        const prevLevelName = levels[currentIndex - 1];
+        showLevel(prevLevelName);
         
         // Update nav
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.classList.remove('active');
-            if (item.dataset.level === prevLevel) {
-                item.classList.add('active');
-            }
-        });
+        updateActiveNav(prevLevelName);
     }
+}
+
+function updateActiveNav(levelName) {
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.dataset.level === levelName) {
+            item.classList.add('active');
+        }
+    });
+}
+
+// Restart course function
+function restartCourse() {
+    showLevel('intro');
+    updateActiveNav('intro');
+    
+    // Reset progress
+    currentProgress = 0;
+    const progressBars = document.querySelectorAll('.progress-fill');
+    progressBars.forEach(bar => {
+        bar.style.width = '0%';
+    });
+    
+    // Reset recognition game
+    initializeRecognitionGame();
+    
+    console.log('Course restarted');
 }
 
 // Journey step clicks

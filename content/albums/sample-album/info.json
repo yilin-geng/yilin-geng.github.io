@@ -1,6 +1,0 @@
-{
-  "title": "Sample Photo Album",
-  "description": "This is a sample photo album. Create new folders in content/albums/ with an info.json file and your photos.",
-  "date": "2024",
-  "preview": "photo1.jpg"
-}

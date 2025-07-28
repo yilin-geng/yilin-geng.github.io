@@ -177,6 +177,33 @@ const arabicLetter = {
 - Game completion rate: 70%+
 - Return rate for review: 40%+
 
+## Integration with Website
+
+### Content Management System
+The Arabic learning platform is integrated into the main website through a curated content discovery system:
+
+```javascript
+// In projects.html - Explicit content curation
+const contentTypes = {
+    projects: {
+        folderNames: ['learning_arabic'], // Manually curated list
+        // ... configuration
+    }
+}
+```
+
+### Benefits of Curated Approach
+- **Quality Control**: Only completed, tested projects appear
+- **Performance**: No unnecessary HTTP requests to non-existent folders
+- **Reliability**: Predictable behavior without 404 errors
+- **User Experience**: Professional presentation of working features only
+
+### Deployment Process
+1. Create project in `content/projects/learning_arabic/`
+2. Add `info.json` with project metadata
+3. Update `projects.html` folderNames array to include 'learning_arabic'
+4. Project automatically appears on Fun Stuff page with appropriate styling
+
 ## Future Enhancements
 
 ### Planned Features
@@ -191,3 +218,9 @@ const arabicLetter = {
 - AR/VR integration for immersive learning
 - Social features for collaborative learning
 - Personalized learning paths based on progress
+
+### Content Management Evolution
+- Consider server-side directory scanning for true dynamic discovery
+- Implement content validation and approval workflow
+- Add automated testing for new content integration
+- Develop admin interface for non-technical content management

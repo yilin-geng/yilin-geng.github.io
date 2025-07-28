@@ -18,9 +18,7 @@
                 <button class="nav-item active" data-level="intro">مقدمة</button>
                 <button class="nav-item" data-level="foundation">أساسيات</button>
                 <button class="nav-item" data-level="building">بناء</button>
-                <button class="nav-item" data-level="structure">هيكل</button>
-                <button class="nav-item" data-level="communication">تواصل</button>
-                <button class="nav-item" data-level="fluency">طلاقة</button>
+                <button class="nav-item" data-level="completion">إنجاز</button>
             </div>
         </div>
     </nav>
@@ -45,20 +43,10 @@
                         <h3>Building</h3>
                         <p>Connect letters and form words</p>
                     </div>
-                    <div class="journey-step" data-level="structure">
-                        <div class="step-number">٣</div>
-                        <h3>Structure</h3>
-                        <p>Construct meaningful sentences</p>
-                    </div>
-                    <div class="journey-step" data-level="communication">
-                        <div class="step-number">٤</div>
-                        <h3>Communication</h3>
-                        <p>Engage in real conversations</p>
-                    </div>
-                    <div class="journey-step" data-level="fluency">
-                        <div class="step-number">٥</div>
-                        <h3>Fluency</h3>
-                        <p>Express complex ideas</p>
+                    <div class="journey-step" data-level="completion">
+                        <div class="step-number">🎉</div>
+                        <h3>Complete</h3>
+                        <p>Celebrate your achievements</p>
                     </div>
                 </div>
                 
@@ -148,63 +136,242 @@
                 <!-- Letter Connection Practice -->
                 <div class="module-card">
                     <h3>ربط الحروف - Letter Connections</h3>
-                    <div class="connection-practice">
-                        <div class="word-builder">
-                            <div class="letter-positions">
-                                <div class="letter-slot" data-position="initial">
-                                    <div class="letter-forms" id="initialForms"></div>
-                                </div>
-                                <div class="letter-slot" data-position="medial">
-                                    <div class="letter-forms" id="medialForms"></div>
-                                </div>
-                                <div class="letter-slot" data-position="final">
-                                    <div class="letter-forms" id="finalForms"></div>
-                                </div>
+                    <div class="connection-explanation">
+                        <p>Arabic letters change shape based on their position in a word. Learn how letters connect!</p>
+                    </div>
+                    
+                    <div class="connection-demo">
+                        <div class="demo-selector">
+                            <label>Choose a letter to see its forms:</label>
+                            <select id="letterSelector" onchange="showLetterForms()">
+                                <option value="">Select a letter...</option>
+                                <option value="ب">ب (ba)</option>
+                                <option value="ت">ت (ta)</option>
+                                <option value="ج">ج (jim)</option>
+                                <option value="د">د (dal)</option>
+                                <option value="ر">ر (ra)</option>
+                                <option value="س">س (sin)</option>
+                                <option value="ع">ع (ayn)</option>
+                                <option value="ف">ف (fa)</option>
+                                <option value="ق">ق (qaf)</option>
+                                <option value="ل">ل (lam)</option>
+                                <option value="م">م (mim)</option>
+                                <option value="ن">ن (nun)</option>
+                                <option value="ه">ه (ha)</option>
+                                <option value="ي">ي (ya)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="letter-forms-display" id="letterFormsDisplay">
+                            <div class="form-item">
+                                <div class="form-label">Isolated<br>(منفصل)</div>
+                                <div class="form-letter" id="isolatedForm">-</div>
                             </div>
-                            <div class="result-word" id="resultWord"></div>
+                            <div class="form-item">
+                                <div class="form-label">Initial<br>(أول)</div>
+                                <div class="form-letter" id="initialForm">-</div>
+                            </div>
+                            <div class="form-item">
+                                <div class="form-label">Medial<br>(وسط)</div>
+                                <div class="form-letter" id="medialForm">-</div>
+                            </div>
+                            <div class="form-item">
+                                <div class="form-label">Final<br>(آخر)</div>
+                                <div class="form-letter" id="finalForm">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="word-examples" id="wordExamples">
+                        <h4>Example Words:</h4>
+                        <div class="example-words" id="exampleWordsList">
+                            <!-- Examples will be populated by JavaScript -->
                         </div>
                     </div>
                 </div>
 
-                <!-- Basic Greetings -->
+                <!-- Enhanced Basic Greetings -->
                 <div class="module-card">
-                    <h3>التحيات الأساسية - Basic Greetings</h3>
+                    <h3>التحيات الأساسية - Essential Greetings</h3>
+                    
                     <div class="greetings-practice">
-                        <div class="greeting-item" onclick="playGreeting('salam')">
-                            <div class="arabic-text">السلام عليكم</div>
-                            <div class="transliteration">as-salāmu ʿalaykum</div>
-                            <div class="english-text">Peace be upon you</div>
-                            <button class="play-btn">🔊</button>
+                        <div class="greeting-category">
+                            <h4>Meeting Someone (اللقاء)</h4>
+                            <div class="greeting-grid">
+                                <div class="greeting-item" data-greeting="السلام عليكم">
+                                    <div class="arabic-text">السلام عليكم</div>
+                                    <div class="transliteration">as-salāmu ʿalaykum</div>
+                                    <div class="english-text">Peace be upon you (formal)</div>
+                                    <div class="usage-note">Universal Islamic greeting</div>
+                                    <button class="play-btn" onclick="playGreeting('salam')">🔊</button>
+                                </div>
+                                
+                                <div class="greeting-item" data-greeting="أهلاً وسهلاً">
+                                    <div class="arabic-text">أهلاً وسهلاً</div>
+                                    <div class="transliteration">ahlan wa sahlan</div>
+                                    <div class="english-text">Welcome!</div>
+                                    <div class="usage-note">Welcoming guests</div>
+                                    <button class="play-btn" onclick="playGreeting('ahlan')">🔊</button>
+                                </div>
+                                
+                                <div class="greeting-item" data-greeting="مرحباً">
+                                    <div class="arabic-text">مرحباً</div>
+                                    <div class="transliteration">marḥaban</div>
+                                    <div class="english-text">Hello! (informal)</div>
+                                    <div class="usage-note">Casual greeting</div>
+                                    <button class="play-btn" onclick="playGreeting('marhaban')">🔊</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="greeting-item" onclick="playGreeting('ahlan')">
-                            <div class="arabic-text">أهلاً وسهلاً</div>
-                            <div class="transliteration">ahlan wa sahlan</div>
-                            <div class="english-text">Welcome</div>
-                            <button class="play-btn">🔊</button>
+
+                        <div class="greeting-category">
+                            <h4>Asking How Someone Is (السؤال عن الحال)</h4>
+                            <div class="greeting-grid">
+                                <div class="greeting-item" data-greeting="كيف حالك؟">
+                                    <div class="arabic-text">كيف حالك؟</div>
+                                    <div class="transliteration">kayf ḥālak?</div>
+                                    <div class="english-text">How are you? (to male)</div>
+                                    <div class="usage-note">Standard inquiry</div>
+                                    <button class="play-btn" onclick="playGreeting('kayf-halak')">🔊</button>
+                                </div>
+                                
+                                <div class="greeting-item" data-greeting="كيف حالك؟ (f)">
+                                    <div class="arabic-text">كيف حالكِ؟</div>
+                                    <div class="transliteration">kayf ḥālik?</div>
+                                    <div class="english-text">How are you? (to female)</div>
+                                    <div class="usage-note">Note the ِ ending</div>
+                                    <button class="play-btn" onclick="playGreeting('kayf-halik')">🔊</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="greeting-item" onclick="playGreeting('kayf-halak')">
-                            <div class="arabic-text">كيف حالك؟</div>
-                            <div class="transliteration">kayf ḥālak?</div>
-                            <div class="english-text">How are you?</div>
-                            <button class="play-btn">🔊</button>
+
+                        <div class="greeting-category">
+                            <h4>Common Responses (الردود الشائعة)</h4>
+                            <div class="greeting-grid">
+                                <div class="greeting-item" data-greeting="الحمد لله">
+                                    <div class="arabic-text">الحمد لله</div>
+                                    <div class="transliteration">al-ḥamdu lillāh</div>
+                                    <div class="english-text">Praise be to God</div>
+                                    <div class="usage-note">Common response meaning "fine"</div>
+                                    <button class="play-btn" onclick="playGreeting('hamdulillah')">🔊</button>
+                                </div>
+                                
+                                <div class="greeting-item" data-greeting="بخير">
+                                    <div class="arabic-text">بخير، شكراً</div>
+                                    <div class="transliteration">bi-khayr, shukran</div>
+                                    <div class="english-text">Fine, thank you</div>
+                                    <div class="usage-note">Simple positive response</div>
+                                    <button class="play-btn" onclick="playGreeting('bikhayr')">🔊</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="greeting-category">
+                            <h4>Saying Goodbye (الوداع)</h4>
+                            <div class="greeting-grid">
+                                <div class="greeting-item" data-greeting="مع السلامة">
+                                    <div class="arabic-text">مع السلامة</div>
+                                    <div class="transliteration">maʿa as-salāma</div>
+                                    <div class="english-text">Go with peace (goodbye)</div>
+                                    <div class="usage-note">Formal farewell</div>
+                                    <button class="play-btn" onclick="playGreeting('ma-salamah')">🔊</button>
+                                </div>
+                                
+                                <div class="greeting-item" data-greeting="إلى اللقاء">
+                                    <div class="arabic-text">إلى اللقاء</div>
+                                    <div class="transliteration">ilā al-liqā'</div>
+                                    <div class="english-text">Until we meet again</div>
+                                    <div class="usage-note">See you later</div>
+                                    <button class="play-btn" onclick="playGreeting('ila-liqa')">🔊</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="greeting-practice">
+                        <h4>Practice: Match the Response</h4>
+                        <div class="practice-question" id="greetingPractice">
+                            <div class="question-text">
+                                <span class="arabic-question" id="practiceQuestion">السلام عليكم</span>
+                                <span class="english-question" id="practiceQuestionEn">Peace be upon you</span>
+                            </div>
+                            <div class="practice-options">
+                                <button class="practice-btn" onclick="checkGreetingAnswer('وعليكم السلام')">وعليكم السلام</button>
+                                <button class="practice-btn" onclick="checkGreetingAnswer('أهلاً وسهلاً')">أهلاً وسهلاً</button>
+                                <button class="practice-btn" onclick="checkGreetingAnswer('مع السلامة')">مع السلامة</button>
+                            </div>
+                            <div class="practice-feedback" id="greetingFeedback"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Conversation Simulator -->
+                <!-- Redesigned Interactive Conversation -->
                 <div class="module-card">
-                    <h3>محاكي المحادثة - Conversation Simulator</h3>
+                    <h3>محاكي المحادثة - Interactive Conversation</h3>
+                    
+                    <div class="conversation-intro">
+                        <p>Practice a real Arabic conversation step by step. You'll learn proper responses and cultural context.</p>
+                    </div>
+
                     <div class="conversation-sim">
+                        <div class="conversation-scenario">
+                            <h4 id="scenarioTitle">Scenario: Meeting Someone New</h4>
+                            <p id="scenarioDescription">You're meeting Ahmed, a new colleague. Practice the greeting exchange.</p>
+                        </div>
+
                         <div class="chat-window" id="chatWindow">
-                            <div class="message received">
-                                <div class="arabic">السلام عليكم</div>
-                                <div class="english">Peace be upon you</div>
+                            <div class="conversation-start">
+                                <div class="character-intro">
+                                    <div class="character-avatar">👨</div>
+                                    <div class="character-name">Ahmed</div>
+                                </div>
+                                <div class="message received" id="initialMessage">
+                                    <div class="arabic">السلام عليكم</div>
+                                    <div class="transliteration">as-salāmu ʿalaykum</div>
+                                    <div class="english">Peace be upon you</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="response-options">
-                            <button class="response-btn" onclick="sendResponse('وعليكم السلام', 'And upon you peace')">وعليكم السلام</button>
-                            <button class="response-btn" onclick="sendResponse('أهلاً', 'Hello')">أهلاً</button>
-                            <button class="response-btn" onclick="sendResponse('مرحباً', 'Hello/Hi')">مرحباً</button>
+
+                        <div class="response-section" id="responseSection">
+                            <div class="response-instruction">
+                                <strong>Your turn:</strong> How should you respond to this greeting?
+                            </div>
+                            <div class="response-options" id="responseOptions">
+                                <button class="response-btn correct" onclick="handleConversationResponse('وعليكم السلام', 'wa ʿalaykumu as-salām', 'And upon you peace', true)">
+                                    <div class="option-arabic">وعليكم السلام</div>
+                                    <div class="option-english">And upon you peace</div>
+                                </button>
+                                <button class="response-btn" onclick="handleConversationResponse('شكراً', 'shukran', 'Thank you', false)">
+                                    <div class="option-arabic">شكراً</div>
+                                    <div class="option-english">Thank you</div>
+                                </button>
+                                <button class="response-btn" onclick="handleConversationResponse('مع السلامة', 'maʿa as-salāma', 'Goodbye', false)">
+                                    <div class="option-arabic">مع السلامة</div>
+                                    <div class="option-english">Goodbye</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="conversation-progress">
+                            <div class="progress-indicator">
+                                <span>Step <span id="currentStep">1</span> of <span id="totalSteps">4</span></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="conversationProgress" style="width: 25%"></div>
+                            </div>
+                        </div>
+
+                        <div class="cultural-tip" id="culturalTip">
+                            <div class="tip-icon">💡</div>
+                            <div class="tip-content">
+                                <strong>Cultural Tip:</strong> "السلام عليكم" is the traditional Islamic greeting. The proper response is "وعليكم السلام" which mirrors back the greeting.
+                            </div>
+                        </div>
+
+                        <div class="conversation-controls">
+                            <button class="control-btn" onclick="restartConversation()">🔄 Restart</button>
+                            <button class="control-btn" onclick="nextScenario()">➡️ Next Scenario</button>
                         </div>
                     </div>
                 </div>
@@ -216,41 +383,68 @@
             </div>
         </section>
 
-        <!-- Additional levels will be similar in structure -->
-        <section id="structure" class="level-section">
+        <!-- Completion Section -->
+        <section id="completion" class="level-section">
             <div class="level-header">
-                <h1 class="level-title">المستوى الثالث: هيكل</h1>
-                <p class="level-subtitle">Level 3: Structure - Sentence Construction</p>
+                <h1 class="level-title">تهانينا! - Congratulations!</h1>
+                <p class="level-subtitle">You've completed the Arabic Foundation Course</p>
             </div>
-            <div class="coming-soon">
-                <h3>قريباً - Coming Soon</h3>
-                <p>This level is under development</p>
-            </div>
-        </section>
+            
+            <div class="completion-content">
+                <div class="achievement-summary">
+                    <h3>🎉 What You've Accomplished</h3>
+                    <div class="achievements-grid">
+                        <div class="achievement-item">
+                            <div class="achievement-icon">🔤</div>
+                            <h4>Arabic Alphabet Mastery</h4>
+                            <p>Learned all 28 Arabic letters and their sounds</p>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">🔢</div>
+                            <h4>Number Recognition</h4>
+                            <p>Mastered Arabic numerals 1-10</p>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">🤝</div>
+                            <h4>Basic Greetings</h4>
+                            <p>Can exchange common Arabic greetings</p>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">🔗</div>
+                            <h4>Letter Connections</h4>
+                            <p>Understand how Arabic letters connect</p>
+                        </div>
+                    </div>
+                </div>
 
-        <section id="communication" class="level-section">
-            <div class="level-header">
-                <h1 class="level-title">المستوى الرابع: تواصل</h1>
-                <p class="level-subtitle">Level 4: Communication - Practical Conversations</p>
-            </div>
-            <div class="coming-soon">
-                <h3>قريباً - Coming Soon</h3>
-                <p>This level is under development</p>
-            </div>
-        </section>
+                <div class="next-steps">
+                    <h3>🚀 Continue Your Arabic Journey</h3>
+                    <p>Ready to take your Arabic skills to the next level? Here are recommended resources:</p>
+                    <div class="resources-list">
+                        <div class="resource-item">
+                            <strong>📚 Online Courses:</strong> Duolingo Arabic, Babbel, or iTalki for structured learning
+                        </div>
+                        <div class="resource-item">
+                            <strong>📖 Textbooks:</strong> "Al-Kitaab" series or "Madinah Arabic" for comprehensive study
+                        </div>
+                        <div class="resource-item">
+                            <strong>🎧 Listening:</strong> Arabic podcasts, news (Al Jazeera), or YouTube channels
+                        </div>
+                        <div class="resource-item">
+                            <strong>💬 Practice:</strong> Language exchange apps like HelloTalk or Tandem
+                        </div>
+                    </div>
+                </div>
 
-        <section id="fluency" class="level-section">
-            <div class="level-header">
-                <h1 class="level-title">المستوى الخامس: طلاقة</h1>
-                <p class="level-subtitle">Level 5: Fluency - Advanced Expression</p>
-            </div>
-            <div class="coming-soon">
-                <h3>قريباً - Coming Soon</h3>
-                <p>This level is under development</p>
+                <div class="restart-option">
+                    <button class="primary-btn" onclick="restartCourse()">🔄 Review Course Again</button>
+                    <button class="secondary-btn" onclick="window.close()">✨ Explore More Projects</button>
+                </div>
             </div>
         </section>
     </main>
 
+    <script src="audio-data.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
