@@ -441,9 +441,96 @@ function setupPortfolioTabs() {
     });
 }
 
+// Pinboard drag functionality
+class PinboardDragHandler {
+    constructor() {
+        this.isDragging = false;
+        this.currentDragElement = null;
+        this.offset = { x: 0, y: 0 };
+        this.init();
+    }
+
+    init() {
+        this.setupDragHandlers();
+    }
+
+    setupDragHandlers() {
+        const pinboardPins = document.querySelectorAll('.education-pin');
+        
+        pinboardPins.forEach(pin => {
+            pin.style.cursor = 'grab';
+            pin.style.position = 'absolute';
+            
+            pin.addEventListener('mousedown', (e) => this.startDrag(e, pin));
+            pin.addEventListener('touchstart', (e) => this.startDrag(e, pin), { passive: false });
+        });
+
+        document.addEventListener('mousemove', (e) => this.drag(e));
+        document.addEventListener('touchmove', (e) => this.drag(e), { passive: false });
+        
+        document.addEventListener('mouseup', () => this.endDrag());
+        document.addEventListener('touchend', () => this.endDrag());
+    }
+
+    startDrag(e, pin) {
+        e.preventDefault();
+        this.isDragging = true;
+        this.currentDragElement = pin;
+        pin.style.cursor = 'grabbing';
+        pin.style.zIndex = '1000';
+
+        const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+        
+        const rect = pin.getBoundingClientRect();
+        const pinboardRect = pin.closest('.pinboard-background').getBoundingClientRect();
+        
+        this.offset.x = clientX - rect.left;
+        this.offset.y = clientY - rect.top;
+    }
+
+    drag(e) {
+        if (!this.isDragging || !this.currentDragElement) return;
+        
+        e.preventDefault();
+        
+        const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+        
+        const pinboard = this.currentDragElement.closest('.pinboard-background');
+        const pinboardRect = pinboard.getBoundingClientRect();
+        
+        let newLeft = ((clientX - this.offset.x - pinboardRect.left) / pinboardRect.width) * 100;
+        let newTop = ((clientY - this.offset.y - pinboardRect.top) / pinboardRect.height) * 100;
+        
+        // Allow content to extend beyond pinboard while keeping pin tack visible
+        const pinTackSize = 20; // Approximate pin tack size
+        const minLeft = -30; // Allow content to extend left
+        const maxLeft = 95;   // Keep pin tack within pinboard
+        const minTop = -20;   // Allow content to extend up
+        const maxTop = 95;    // Keep pin tack within pinboard
+        
+        newLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
+        newTop = Math.max(minTop, Math.min(maxTop, newTop));
+        
+        this.currentDragElement.style.left = newLeft + '%';
+        this.currentDragElement.style.top = newTop + '%';
+    }
+
+    endDrag() {
+        if (this.currentDragElement) {
+            this.currentDragElement.style.cursor = 'grab';
+            this.currentDragElement.style.zIndex = '10';
+        }
+        this.isDragging = false;
+        this.currentDragElement = null;
+    }
+}
+
 // Initialize the content manager when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new ContentManager();
     new BinaryMatrix();
     setupPortfolioTabs();
+    new PinboardDragHandler();
 });
