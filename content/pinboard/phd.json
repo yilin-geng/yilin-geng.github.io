@@ -1,0 +1,17 @@
+{
+  "id": "phd",
+  "type": "education",
+  "position": {
+    "top": "8%",
+    "left": "15%",
+    "rotation": "-3deg"
+  },
+  "pinHeader": {
+    "date": "2023 - Present",
+    "type": "PhD"
+  },
+  "title": "Natural Language Processing",
+  "subtitle": "University of Melbourne",
+  "note": "Focusing on instruction hierarchy and chain of command structures in AI systems",
+  "className": "phd-pin"
+}

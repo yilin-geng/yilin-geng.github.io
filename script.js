@@ -5,6 +5,8 @@ class ContentManager {
 
     async init() {
         await this.loadAbout();
+        await this.loadAboutIntro();
+        await this.loadPinboard();
         await this.loadPortfolio();
         await this.loadAlbums();
         await this.loadProjects();
@@ -25,6 +27,104 @@ class ContentManager {
             document.getElementById('about-content').innerHTML = 
                 '<p>Welcome! Please add your introduction in <code>content/about.md</code></p>';
         }
+    }
+
+    async loadAboutIntro() {
+        try {
+            const response = await fetch('content/about/about_me.md');
+            if (response.ok) {
+                const text = await response.text();
+                const introElement = document.getElementById('about-intro');
+                if (introElement) {
+                    introElement.innerHTML = this.markdownToHtml(text);
+                }
+            }
+        } catch (error) {
+            console.error('Error loading about intro:', error);
+        }
+    }
+
+    async loadPinboard() {
+        try {
+            const pinboardItems = ['phd', 'masters', 'research', 'ai-club'];
+            const items = [];
+
+            for (const itemName of pinboardItems) {
+                try {
+                    const response = await fetch(`content/pinboard/${itemName}.json`);
+                    if (response.ok) {
+                        const item = await response.json();
+                        items.push(item);
+                    }
+                } catch (e) {
+                    console.warn(`Could not load pinboard item: ${itemName}`);
+                }
+            }
+
+            this.renderPinboard(items);
+        } catch (error) {
+            console.error('Error loading pinboard:', error);
+        }
+    }
+
+    renderPinboard(items) {
+        const pinboardContainer = document.querySelector('.pinboard-background');
+        if (!pinboardContainer) return;
+
+        pinboardContainer.innerHTML = items.map(item => {
+            const style = `top: ${item.position.top}; left: ${item.position.left}; transform: rotate(${item.position.rotation});`;
+            
+            if (item.type === 'research-note') {
+                return `
+                    <div class="education-pin ${item.className}" style="${style}">
+                        <div class="pin-tack"></div>
+                        <div class="pin-content">
+                            <div class="pin-note-header">${item.noteHeader}</div>
+                            <div class="sticky-note">
+                                <p>"${item.stickyNote.text}"</p>
+                                <div class="note-signature">${item.stickyNote.signature}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                const pinHeader = item.pinHeader ? `
+                    <div class="pin-header">
+                        <span class="pin-date">${item.pinHeader.date}</span>
+                        <span class="pin-type">${item.pinHeader.type}</span>
+                    </div>
+                ` : '';
+
+                const photo = item.photo ? `
+                    <div class="pin-photo">
+                        <img src="${item.photo.src}" alt="${item.photo.alt}" />
+                        <div class="photo-caption">${item.photo.caption}</div>
+                    </div>
+                ` : '';
+
+                const note = item.note ? `<div class="pin-note">${item.note}</div>` : '';
+
+                const logo = item.logo ? `
+                    <div class="club-logo">
+                        <img src="${item.logo.src}" alt="${item.logo.alt}" />
+                    </div>
+                ` : '';
+
+                return `
+                    <div class="education-pin ${item.className}" style="${style}">
+                        <div class="pin-tack"></div>
+                        <div class="pin-content">
+                            ${pinHeader}
+                            <h3>${item.title}</h3>
+                            <p>${item.subtitle}</p>
+                            ${photo}
+                            ${logo}
+                            ${note}
+                        </div>
+                    </div>
+                `;
+            }
+        }).join('');
     }
 
     async loadPortfolio() {
@@ -503,12 +603,12 @@ class PinboardDragHandler {
         let newLeft = ((clientX - this.offset.x - pinboardRect.left) / pinboardRect.width) * 100;
         let newTop = ((clientY - this.offset.y - pinboardRect.top) / pinboardRect.height) * 100;
         
-        // Allow content to extend beyond pinboard while keeping pin tack visible
-        const pinTackSize = 20; // Approximate pin tack size
-        const minLeft = -30; // Allow content to extend left
-        const maxLeft = 95;   // Keep pin tack within pinboard
-        const minTop = -20;   // Allow content to extend up
-        const maxTop = 95;    // Keep pin tack within pinboard
+        // Allow free movement within pinboard boundaries - notes can be placed anywhere
+        const margin = 5; // Small margin to keep notes visible
+        const minLeft = -margin;
+        const maxLeft = 100 - margin;
+        const minTop = -margin;
+        const maxTop = 100 - margin;
         
         newLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
         newTop = Math.max(minTop, Math.min(maxTop, newTop));

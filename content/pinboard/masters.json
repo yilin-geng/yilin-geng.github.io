@@ -1,0 +1,21 @@
+{
+  "id": "masters",
+  "type": "education",
+  "position": {
+    "top": "25%",
+    "left": "55%",
+    "rotation": "2deg"
+  },
+  "pinHeader": {
+    "date": "Completed",
+    "type": "Master's"
+  },
+  "title": "University of Pennsylvania",
+  "subtitle": "Master's Degree",
+  "photo": {
+    "src": "content/about/education_master.jpg",
+    "alt": "UPenn Graduation",
+    "caption": "Graduation Day! 🎉"
+  },
+  "className": "masters-pin"
+}

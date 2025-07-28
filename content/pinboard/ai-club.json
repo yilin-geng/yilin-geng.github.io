@@ -1,0 +1,21 @@
+{
+  "id": "ai-club",
+  "type": "activity",
+  "position": {
+    "top": "40%",
+    "left": "8%",
+    "rotation": "1deg"
+  },
+  "pinHeader": {
+    "date": "2024-Present",
+    "type": "Leadership"
+  },
+  "title": "Melbourne AI Club",
+  "subtitle": "President",
+  "note": "Connecting researchers with industry opportunities across Australia's AI ecosystem",
+  "logo": {
+    "src": "logos/Melbourne.jpg",
+    "alt": "Melbourne University"
+  },
+  "className": "club-pin"
+}
