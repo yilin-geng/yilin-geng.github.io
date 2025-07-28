@@ -14,18 +14,23 @@ class ContentManager {
     }
 
     async loadAbout() {
-        try {
-            const response = await fetch('content/about.md');
-            if (response.ok) {
-                const text = await response.text();
-                document.getElementById('about-content').innerHTML = this.markdownToHtml(text);
-            } else {
-                document.getElementById('about-content').innerHTML = 
+        // This function is for other pages that might have an 'about-content' element
+        // For index.html, we use loadAboutIntro() instead
+        const aboutContent = document.getElementById('about-content');
+        if (aboutContent) {
+            try {
+                const response = await fetch('content/about.md');
+                if (response.ok) {
+                    const text = await response.text();
+                    aboutContent.innerHTML = this.markdownToHtml(text);
+                } else {
+                    aboutContent.innerHTML = 
+                        '<p>Welcome! Please add your introduction in <code>content/about.md</code></p>';
+                }
+            } catch (error) {
+                aboutContent.innerHTML = 
                     '<p>Welcome! Please add your introduction in <code>content/about.md</code></p>';
             }
-        } catch (error) {
-            document.getElementById('about-content').innerHTML = 
-                '<p>Welcome! Please add your introduction in <code>content/about.md</code></p>';
         }
     }
 
@@ -45,6 +50,12 @@ class ContentManager {
     }
 
     async loadPinboard() {
+        // Only load pinboard if the container exists (i.e., on portfolio.html)
+        const pinboardContainer = document.querySelector('.pinboard-background');
+        if (!pinboardContainer) {
+            return; // Skip pinboard loading on pages that don't have it
+        }
+
         try {
             const pinboardItems = ['phd', 'masters', 'research', 'ai-club'];
             const items = [];
@@ -62,6 +73,10 @@ class ContentManager {
             }
 
             this.renderPinboard(items);
+            // Set up drag handlers after rendering
+            setTimeout(() => {
+                new PinboardDragHandler();
+            }, 100);
         } catch (error) {
             console.error('Error loading pinboard:', error);
         }
@@ -128,7 +143,7 @@ class ContentManager {
     }
 
     async loadPortfolio() {
-        const sections = ['papers', 'events', 'startup'];
+        const sections = ['papers', 'events', 'librai'];
         const allItems = [];
 
         for (const section of sections) {
@@ -136,7 +151,7 @@ class ContentManager {
             // Add type information to each item
             items.forEach(item => {
                 item.type = section.slice(0, -1); // Remove 's' from plural
-                if (item.type === 'startup') item.type = 'venture';
+                if (item.type === 'librai') item.type = 'venture';
             });
             allItems.push(...items);
         }
@@ -154,31 +169,24 @@ class ContentManager {
     async loadPortfolioSection(section) {
         try {
             const items = [];
+            const fileMap = {
+                'papers': [],
+                'events': ['nextgen25-hackathon.json', 'melbourne-ai-club.json'],
+                'librai': ['librai-platform.json', 'research-assistant.json'],
+                'projects': ['chain-of-command.json', 'phd-research.json', 'previous-experience.json']
+            };
 
-            // Try to load a few common file patterns
-            for (let i = 1; i <= 10; i++) {
+            // Use the actual filenames that exist
+            const filenames = fileMap[section] || [];
+            for (const filename of filenames) {
                 try {
-                    const itemResponse = await fetch(`content/portfolio/${section}/item${i}.json`);
+                    const itemResponse = await fetch(`content/portfolio/${section}/${filename}`);
                     if (itemResponse.ok) {
                         const item = await itemResponse.json();
                         items.push(item);
                     }
                 } catch (e) {
-                    // Continue trying other patterns
-                }
-            }
-
-            // Try loading by common names
-            const commonNames = ['paper1', 'paper2', 'event1', 'event2', 'project'];
-            for (const name of commonNames) {
-                try {
-                    const itemResponse = await fetch(`content/portfolio/${section}/${name}.json`);
-                    if (itemResponse.ok) {
-                        const item = await itemResponse.json();
-                        items.push(item);
-                    }
-                } catch (e) {
-                    // Continue
+                    console.warn(`Could not load portfolio item: ${filename}`);
                 }
             }
 
@@ -632,5 +640,5 @@ document.addEventListener('DOMContentLoaded', () => {
     new ContentManager();
     new BinaryMatrix();
     setupPortfolioTabs();
-    new PinboardDragHandler();
+    // PinboardDragHandler is now initialized after pinboard rendering in loadPinboard()
 });

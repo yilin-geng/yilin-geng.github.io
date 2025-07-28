@@ -2,8 +2,8 @@
   "id": "masters",
   "type": "education",
   "position": {
-    "top": "25%",
-    "left": "55%",
+    "top": "15%",
+    "left": "65%",
     "rotation": "2deg"
   },
   "pinHeader": {
