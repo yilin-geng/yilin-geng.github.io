@@ -321,7 +321,7 @@ class ContentManager {
 
     async discoverProjects() {
         const projects = [];
-        const projectNames = ['game1', 'game2', 'interactive-demo', 'visualization'];
+        const projectNames = ['learning_arabic', 'sample-game', 'game1', 'game2', 'interactive-demo', 'visualization'];
 
         for (const name of projectNames) {
             try {

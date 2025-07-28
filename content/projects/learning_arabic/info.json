@@ -1,0 +1,8 @@
+{
+  "title": "Arabic Learning Platform",
+  "description": "An elegant interactive platform for learning Arabic language with progressive levels from script mastery to fluent communication.",
+  "preview": "preview.png",
+  "tags": ["Language Learning", "Arabic", "Interactive", "Education"],
+  "difficulty": "Beginner to Advanced",
+  "technology": "HTML5, CSS3, JavaScript"
+}
